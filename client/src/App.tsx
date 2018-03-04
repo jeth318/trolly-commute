@@ -3,6 +3,8 @@ import API from './api/APIService';
 import Header from './components/Header';
 import Loading from './components/atoms/Loading';
 import TripTable from './components/trips/TripTable';
+import TripAccordion from './components/trips/TripAccordion';
+
 import SearchForm from './components/search/SearchForm';
 import { LegCollection } from './InterfaceCollection';
 import './App.css';
@@ -108,10 +110,11 @@ class App extends React.Component<{}, State> {
           visibleFlash={this.state.visibleFlash}
         />
         {loading}
-        {triptable}
+        {this.state.legCollection && !loading && <TripAccordion legCollection={this.state.legCollection} />}
       </div>
     );
   }
+
   private setLocalStorage() {
     localStorage.setItem('from', this.state.inputFrom);
     localStorage.setItem('to', this.state.inputTo);
