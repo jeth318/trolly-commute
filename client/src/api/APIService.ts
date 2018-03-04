@@ -1,7 +1,6 @@
 const request = require('request');
 const allstops = require('./allstops-sorted.json');
 const firebase = require('firebase');
-
 import * as _ from 'lodash';
 import { LegsRaw } from '../InterfaceCollection';
 import { mockTrip } from './mock';
@@ -17,19 +16,31 @@ import {
 export default class API {
   private accessToken: any;
   private attempts: any = 0;
+  private headers = {'content-type': 'application/json'};
   constructor() {
     this.GetAccessToken()
     .then(()=>{
-      this.UpdateStops();
+      return this.UpdateStops()
     })
-    fetch('/api')
-    .then((resp: any)=>{
-      let response = JSON.parse(resp.body)
-      console.log(response);
+    .then((newStops) => {
+      return this.UpdateStopLocations(newStops)
+    })
+    .then(()=>{
+      return console.log('Done!');
+    })
+  }
+
+  UpdateStopLocations = (stops) => {
+    console.log(stops)
+    return fetch('/api',  {method: 'POST', headers: this.headers, body: JSON.stringify(stops)})
+    .then((res: any)=>{
+      return res.json()
+    })
+    .then((data)=>{
+      return console.log(data);
     })
     .catch((err)=>console.log(err));
   }
-
   // Grabs accesstoken from Västtrafik
   GetAccessToken = () => {
     return new Promise((resolve, reject) => {
@@ -67,17 +78,20 @@ export default class API {
         Authorization: 'Bearer ' + this.accessToken
       }
     }
-    request(options, (err, res)=>{
-      let responseBody = JSON.parse(res.body.toString());
-      let stops = responseBody.LocationList.StopLocation;
-      let filteredByTrack = _.filter(stops, (s)=>!s.hasOwnProperty('track'));
-      let sortedStops = _.sortBy(filteredByTrack, ['weight']).reverse();
-      /* let cleanStops = _.map(sortedStops, (s)=>{
-        s.name = _.capitalize(s.name);
-        return s;
-      }); */
-      console.log(sortedStops);
+    return new Promise((resolve, reject)=>{
+      request(options, (err, res)=>{
+        let responseBody = JSON.parse(res.body.toString());
+        let stops = responseBody.LocationList.StopLocation;
+        let filteredByTrack = _.filter(stops, (s)=>!s.hasOwnProperty('track'));
+        let sortedStops = _.sortBy(filteredByTrack, ['weight']).reverse();
+        let cleanStops = _.map(sortedStops, (s)=>{
+          s.name = _.capitalize(s.name);
+          return s;
+        });
+         resolve(cleanStops);
+      })
     })
+    
   }
   // Browses local json containing all stoplocations. Returns a list of 15 locations
   GetAllStops = (search: String) => {
