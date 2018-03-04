@@ -12,22 +12,18 @@ import {
   allStopsUrl
 } from '../config';
 
-
 export default class API {
   private accessToken: any;
   private attempts: any = 0;
   private headers = {'content-type': 'application/json'};
   constructor() {
-    this.GetAccessToken()
-    .then(()=>{
-      return this.UpdateStops()
-    })
-    .then((newStops) => {
-      return this.UpdateStopLocations(newStops)
-    })
-    .then(()=>{
-      return console.log('Done!');
-    })
+    this.GetAllStopLocations()
+    .then((res)=>res.json())
+    .then((data)=>console.log(data))
+  }
+
+  GetAllStopLocations = () => {
+    return fetch('/api/stoplocations');
   }
 
   UpdateStopLocations = (stops) => {

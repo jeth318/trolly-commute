@@ -32,19 +32,27 @@ app.listen(app.get('port'), function(){
 	console.log('Running @ ' + app.get('port'))
 });
 
+app.get('/api/stoplocations', function(req, res) {
+	API.GetAllStopLocations()
+	.then((result)=>{
+		return res.json({data: result});
+	})
+	.catch((err)=>{
+		console.log(err);
+		res.send({error: err})
+	})
+})
+
 app.get('/api/update/stoplocations', function(req, res){
 	StopLocation.remove()
 	.then(()=>{
-		return API.UpdateStops();
+		return API.FetchStops();
 	})
 	.then((res)=>{
-		return API.UpdateStops()
-	})
-	.then((res)=>{
-		return StopLocation.insertMany(res);
+		return API.InsertStopLocations(res);
 	})
 	.then(()=>{
-		res.json({msg: 'Success'});
+		res.json({data: 'Success'});
 	})
 	.catch((err)=>{
 		res.send({error: 'Failed inserting', stack: err})
