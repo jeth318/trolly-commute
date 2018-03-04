@@ -140,12 +140,12 @@ class SearchForm extends React.Component<Props, State> {
   }
 
   private getSuggestionValue = (suggestion: Suggestion) => {
-    return suggestion.name;
+    return suggestion.fullName;
   }
 
   private renderSuggestion = (suggestion: Suggestion) => {
     return (
-      <span data-stopid={suggestion.id.toString()}>{suggestion.name}</span>
+      <span data-stopid={suggestion.id.toString()}>{suggestion.fullName}</span>
     );
   }
 
@@ -154,7 +154,7 @@ class SearchForm extends React.Component<Props, State> {
   }
 
   private shouldRenderSuggestions = (value: string) => {
-    return value.trim().length >= 2;
+    return value.trim().length >= 3;
   }
 
   private onSuggestionsClearRequested = () => {
@@ -163,7 +163,7 @@ class SearchForm extends React.Component<Props, State> {
 
   private onSuggestionsFetchRequested = ({ value, reason }: any) => {
     if (reason !== 'input-focused') {
-      api.GetAllStops(value)
+      api.GetStopLocations(value)
         .then((res: any) => {
           this.setState({ suggestions: res });
         });

@@ -50,6 +50,14 @@ export interface PrettyLegsRaw {
   ];
 }
 
+export interface StopLocation {
+  id: String,
+  name: String,
+  lat: Number,
+  lon: Number,
+  weight: Number
+}
+
 export interface LegsRaw {
   Leg: {} | [{}];
 }
@@ -93,6 +101,7 @@ export interface SuggestionProps {
   lat: number;
   lon: number;
   name: string;
+  fullName: string;
   weight: number;
 }
 

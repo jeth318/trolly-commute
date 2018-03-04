@@ -4,9 +4,8 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var StopLocation = require('./db/mongoose/StopLocationModel');
-var API = require('./services/API');
+var api = require('./services/api');
 
-//API.FetchAccessToken().then((res)=>console.log(res));
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://root:root@ds141068.mlab.com:41068/trollycommute');
 
@@ -16,26 +15,46 @@ db.once('open', () =>console.log('Connected to mongoose'));
 
 const port = process.env.PORT || '5000';
 
-app.use(bodyParser.json({limit: '50mb'}));       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-    extended: true
-}));
+// Middleware
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('port', port);
 app.use(express.static(__dirname + '/public'));
-app.get('/', function(req, res) {
-	res.set('Content-Type', 'text/html')
-	.sendFile(path.join(__dirname, '/public/index.html'))
-});
 
 app.listen(app.get('port'), function(){
 	console.log('Running @ ' + app.get('port'))
 });
 
+// Main route
+app.get('/', function(req, res) {
+	res.set('Content-Type', 'text/html')
+	.sendFile(path.join(__dirname, '/public/index.html'))
+});
+
+
+
+// Fetches stored stoplocations from mongodb
+app.post('/api/stops', function(req, res){
+	api.GetMatchingStops(req.body.search)
+	.then((data)=>{
+		res.json(data);
+	})
+})
+
+// Fetches trip data from remote
+app.post('/api/trips', function(req, res){
+	api.GetTripFromSearch(req.body.origin, req.body.destination)
+	.then((data)=>{
+		res.json(data)
+	})
+})
+
+// Updates the stored stoplocations with new ones from vasttrafik
 app.get('/api/stoplocations', function(req, res) {
-	API.GetAllStopLocations()
+	api.GetAllStopLocations()
 	.then((result)=>{
-		return res.json({data: result});
+		return res.json(result);
 	})
 	.catch((err)=>{
 		console.log(err);
@@ -46,27 +65,16 @@ app.get('/api/stoplocations', function(req, res) {
 app.get('/api/update/stoplocations', function(req, res){
 	StopLocation.remove()
 	.then(()=>{
-		return API.FetchStops();
+		return api.FetchStopLocations();
 	})
 	.then((res)=>{
-		return API.InsertStopLocations(res);
+		return api.InsertStopLocations(res);
 	})
 	.then(()=>{
+		console.log('Done')
 		res.json({data: 'Success'});
 	})
 	.catch((err)=>{
 		res.send({error: 'Failed inserting', stack: err})
-	})
-})
-
-app.get('/api/stoplocations', function(req, res){
-	console.log('Got a request')
-	console.log(req.body);
-	StopLocation.find()
-	.then(()=>{
-		res.json({data: req.body});
-	})
-	.catch((err)=>{
-		res.send({error: 'Failed getting stoplocations', stack: err})
 	})
 })

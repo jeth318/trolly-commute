@@ -1,16 +1,18 @@
 var request = require('request');
-var accessToken = '';
-var attempts = 0;
 var _ = require('lodash');
 var StopLocation = require('../db/mongoose/StopLocationModel');
+var accessToken = '';
+var attempts = 0;
+var conf = require('../server-config/config');
 
+// Grab token from Västtrafik
 FetchAccessToken = () => {
   let options = {
-    url: 'https://api.vasttrafik.se/token',
+    url: conf.tokenUrl,
     method: 'POST',
     auth: {
-      user: 'enRCZQWkxw0oVS5xDrcO6qZsAp0a',
-      pass: 'H_tTcLe00_hn0STj1w4asDwixdMa'
+      user: conf.vastTrafikUser,
+      pass: conf.vastTrafikSecret
     },
     form: {
       grant_type: 'client_credentials'
@@ -18,9 +20,7 @@ FetchAccessToken = () => {
   };
   return new Promise((resolve, reject) => {
     request(options, function (err, res) {
-      if (err) {
-        reject(err);
-      }
+      err && reject(err);
       let responseBody = res.body ? JSON.parse(res.body) : null;
       accessToken = responseBody.access_token;
       resolve(responseBody.access_token);
@@ -29,19 +29,61 @@ FetchAccessToken = () => {
   })
 }
 
+GetMatchingStops = (query) => {
+  return StopLocation.find({ 'fullName': { '$regex': query, $options: 'i' } })
+}
+
 GetAllStopLocations = () => {
   return StopLocation.find({});
 }
 GetOneStopLocation = (id) => {
-  return StopLocation.findOne({id: id});
+  return StopLocation.findOne({ id: id });
 }
 InsertStopLocations = (data) => {
   return StopLocation.insertMany(data);
 }
 
-FetchStops = () => {
+// Performs a API-request to Västrafik, using accesstoken and searchparams
+GetTripFromSearch = (fromId, toId) => {
+  let tripBaseUrl = conf.tripBaseUrl;
+  let url = tripBaseUrl + fromId + '&destId=' + toId + '&numTrips=10&format=json';
+  let options = {
+    url: url,
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + accessToken
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    request(options,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        if (attempts === 3) {
+          attempts = 0;
+          return resolve('Problem getting valid token')
+        }
+        if (res.statusCode === 401) {
+          attempts++;
+          FetchAccessToken()
+            .then((mess) => {
+              resolve(GetTripFromSearch(fromId, toId))
+            });
+          return null;
+        }
+        attempts = 0;
+        let responseBody = JSON.parse(res.body.toString());
+        return resolve(responseBody);
+      }
+    );
+  });
+}
+
+FetchStopLocations = () => {
   const options = {
-    url: 'https://api.vasttrafik.se/bin/rest.exe/v2/location.allstops?format=json',
+    url: conf.allStopsUrl,
     method: 'GET',
     headers: {
       Authorization: 'Bearer ' + accessToken,
@@ -57,20 +99,23 @@ FetchStops = () => {
         return reject('Cant get authorized...');
       }
       if (res.statusCode === 401) {
-        console.log('Invalid');
+        console.log('401 Unauthorized. Trying to grab new token ' + attempts);
         attempts++;
         FetchAccessToken()
           .then((mess) => {
-            resolve(FetchStops())
+            resolve(FetchStopLocations())
           });
         return null;
       }
+      console.log('200 - OK')
       let responseBody = JSON.parse(res.body.toString());
       let stops = responseBody.LocationList.StopLocation;
       let filteredByTrack = _.filter(stops, (s) => !s.hasOwnProperty('track'));
-      let sortedStops = _.sortBy(filteredByTrack, ['weight']).reverse();
-      let cleanStops = _.map(sortedStops, (s) => {
-        s.name = _.capitalize(s.name);
+      let cleanStops = _.map(filteredByTrack, (s) => {
+        let fullName = s.name.split(',')
+        s.fullName = s.name;
+        s.name = _.capitalize(_.trimEnd(fullName[0]));
+        s.city = _.trimStart(fullName[1]);
         return s;
       });
       resolve(cleanStops);
@@ -80,8 +125,10 @@ FetchStops = () => {
 
 module.exports = {
   FetchAccessToken,
-  FetchStops,
+  FetchStopLocations,
   GetAllStopLocations,
   InsertStopLocations,
   GetOneStopLocation,
+  GetTripFromSearch,
+  GetMatchingStops
 };

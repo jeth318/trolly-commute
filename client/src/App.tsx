@@ -178,18 +178,7 @@ class App extends React.Component<{}, State> {
     if (fromId !== '' && toId !== '' && fromId !== toId) {
      
       this.preventSpam();      
-
-      // mock during develops
-      /* api.GetMockTrip(this.state.fromId, this.state.toId)
-          .then((res: LegCollection) => {
-            this.setState({
-              legCollection: res,
-              loading: false,
-              });
-            });
-            this.setLocalStorage(); */
-
-      api.GetTripFromSearch(this.state.fromId, this.state.toId)
+      api.GetTrips(this.state.fromId, this.state.toId)
         .then((res: LegCollection) =>  {
           this.setState({
             legCollection: res,
