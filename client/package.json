@@ -25,6 +25,7 @@
     "react-dom": "^16.2.0",
     "react-live-clock": "^2.0.2",
     "react-scripts-ts": "2.7.0",
+    "semantic-ui-react": "^0.78.3",
     "stream": "0.0.2",
     "url": "^0.11.0"
   },

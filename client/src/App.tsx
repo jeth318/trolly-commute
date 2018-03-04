@@ -6,6 +6,8 @@ import TripTable from './components/trips/TripTable';
 import TripAccordion from './components/trips/TripAccordion';
 
 import SearchForm from './components/search/SearchForm';
+import SemanticSearch from './components/search/SemanticSearch';
+
 import { LegCollection } from './InterfaceCollection';
 import './App.css';
 const api = new API;
@@ -100,7 +102,28 @@ class App extends React.Component<{}, State> {
     return (
       <div>
         <Header />
-        <SearchForm
+        <SemanticSearch 
+          identifier="origin"     
+          handleChange={this.handleChange}
+        />
+        <SemanticSearch 
+          identifier="destination"
+          handleChange={this.handleChange}
+        />
+        {false && this.renderSearchForm()}
+        {loading}
+        {this.state.legCollection && !loading && <TripAccordion legCollection={this.state.legCollection} />}
+      </div>
+    );
+  }
+
+  private handleChange = (value, identifier) => {
+    console.log(value, identifier);
+  }
+
+  private renderSearchForm() {
+    return (
+      <SearchForm
           resetInputId={this.resetInputId}
           handleInputFrom={this.handleInputFrom}
           handleInputTo={this.handleInputTo}
@@ -109,10 +132,7 @@ class App extends React.Component<{}, State> {
           handleSwap={this.handleSwap}
           visibleFlash={this.state.visibleFlash}
         />
-        {loading}
-        {this.state.legCollection && !loading && <TripAccordion legCollection={this.state.legCollection} />}
-      </div>
-    );
+    )
   }
 
   private setLocalStorage() {

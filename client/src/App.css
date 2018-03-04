@@ -501,7 +501,7 @@ input.error {
   z-index: -1;
 }
 
-.loading {
+.loading-symbol {
   margin-top: 50px;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 2s; /* Firefox < 16 */
@@ -578,6 +578,8 @@ img.loading-img {
     -o-animation: fadein 0.5s; /* Opera < 12.1 */
        animation: fadein 0.5s;
 }
+
+/** PROBLEM END **/
 
 table tbody tr td {
   vertical-align: middle !important;
@@ -674,6 +676,17 @@ table tbody {
   margin: 10px;
 }
 
+.ui.input{
+  width: 100%;
+}
+.ui.grid{
+  margin: 0;
+  padding: 0;
+}
+.results.transition {
+  width: 100% !important;
+}
+
 @media screen and (min-width: 1279px) {
   #wallpaperWide {
     width: 100vw;
@@ -744,19 +757,19 @@ table tbody {
   .inner-container {
     padding: 0;
   }
-  body {
+ /*  body {
     height: auto;
-  }
+  } */
   .wideRow {
     display: none;
   }
-  .container-fluid {
+ /*  .container-fluid {
     width: 100%;
     margin-left: 0%;
     margin-right: 0%;
     padding-left: 0px;
     padding-right: 0px;
-  }
+  } */
 } /**** AUTOCOMPLETE STYLING  ****/
 
 .ui-autocomplete {
