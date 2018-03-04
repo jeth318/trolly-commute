@@ -20,7 +20,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('port', port);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/client/build'));
 
 app.listen(app.get('port'), function(){
 	console.log('Running @ ' + app.get('port'))
