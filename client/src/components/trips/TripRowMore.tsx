@@ -34,14 +34,10 @@ class TripRowMore extends React.Component<Props, {}> {
   }
   render() {
     return (
-      <tr className={this.props.visible ? 'moreInfoRow-visible' : 'moreInfoRow'}>
-        <td
-          colSpan={5}
-          className="moreInfoTd"
-        >
+      <div className='moreInfoRow'>
           {this.renderMoreInfo()}
-        </td>
-      </tr>
+      </div>
+      
     );
   }
 

@@ -178,34 +178,61 @@ th.arrival{
 }
 
 .moreInfoRow {
-  display: none;
- /*  background-color: #5c5c5c;
+  padding: 20px;
+  background-color: grey;
   color: white;
-  font-size: 1em;
-  box-shadow: 0px 0px 0px 3px #545454 inset;
-  transform-origin: top;
-  animation: slideRowUp forwards 150ms ease-in-out; */
-}
-.moreInfoRow-visible {
-  display: block;
-  background-color: #5c5c5c;
-  opacity: 0.9;
-  width: 100%;
-  color: white;
-  font-size: 1em;
-  box-shadow: 0px 0px 0px 3px #545454 inset;
-  
 }
 
 .accordion-header{
   margin-top: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  
+  height: 40px;
   display: flex;
   padding: 10px;
   justify-content: space-between;
   background-color: black;
   color: white;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  
 }
 
+.accordion-header-child {
+  align-self: center;
+  padding: 12px;
+}
+
+.acc-open {
+ /*  max-height: 800px;
+  transition: max-height 1s ease-in; */
+}
+.acc-closed {
+/*   max-height: 0;
+  transition: max-height 0.5s ease-out;
+  overflow: hidden; */
+}
+
+.search-input{
+
+}
+.search-button {
+
+}
+
+.search-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+}
+.column {
+  padding: 0 !important;
+}
+
+accordion-header-child
 
 /** ACCORDION **/
 
@@ -239,7 +266,7 @@ th.arrival{
   background-color: #f4f4f4;
   color: #444;
   cursor: pointer;
-  padding: 18px;
+  padding: 10px;
   width: 100%;
   text-align: left;
   border: none;
@@ -264,6 +291,7 @@ th.arrival{
 .accordion__title > *:last-child,
 .accordion__body > *:last-child {
   margin-bottom: 0;
+  transition: height 400ms easi-in;
 }
 
 .accordion__arrow {
@@ -656,7 +684,7 @@ table tbody {
   background-color: rgba(62, 62, 62, 0.3);
 }
 
-.mainTr:hover {
+/* .mainTr:hover {
   background-color: lightgrey;
   border-radius: 10px;
 }
@@ -670,7 +698,7 @@ table tbody {
 }
 .mainTr-selected-mobClass:hover {
   border-radius: 10px;
-}
+} */
 
 #showOptionsDiv {
   margin: 10px;
@@ -685,6 +713,8 @@ table tbody {
 }
 .results.transition {
   width: 100% !important;
+  overflow-y: auto;
+  max-height: 290px;
 }
 
 @media screen and (min-width: 1279px) {

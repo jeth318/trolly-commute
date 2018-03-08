@@ -1,50 +1,56 @@
-import * as _ from 'lodash';
-// import faker from 'faker';
+// import * as _ from 'lodash';
 import * as React from 'react';
 import { Search, Grid } from 'semantic-ui-react'
 import API from '../../api/APIService';
 const api = new API();
 
-/* const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}))
- */
-
-
-class SemanticSearch extends React.Component <any, any>{
+class SemanticSearch extends React.Component<any, any>{
+  constructor() {
+    super({});
+    this.state = {
+      isLoading: false,
+      results: [],
+      value: '',
+      typeingTimeOut: 0
+    };
+  }
   componentWillMount() {
     this.resetComponent()
   }
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+  resetComponent = () => this.setState({
+    isLoading: false,
+    results: [],
+    value: '',
+    searchId: '',
+  })
 
   handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title })
+    { }
+    this.props.handleSelect(result, this.props.identifier)
   }
 
+  private doSearch = () => {
+    if (this.state.value.length > 2) {
+      api.GetStopLocations(this.state.value)
+        .then((response: any) => {
+          this.setState({
+            isLoading: false,
+            results: response.stopLocations,
+          })
+        })
+    }
+  }
   handleSearchChange = (e, { value }) => {
-    
-    this.setState({ isLoading: true, value })
+    const self = this;
+    self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut)
 
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
-      
-    }, 500)
-    api.GetStopLocations(value)
-    .then((res: any)=>{
-      let adjustedRes = _.map(res, (r: any)=>{
-        r.title = r.name;
-        r.description = r.city;
-        return r;
-      })
-      console.log(adjustedRes);
-      this.setState({
-        isLoading: false,
-        results: adjustedRes,
-      })
+    self.setState({
+      value: value,
+      typeingTimeOut: setTimeout(() => {
+        this.doSearch();
+      }, 300)
     })
   }
 
@@ -55,6 +61,8 @@ class SemanticSearch extends React.Component <any, any>{
       <Grid>
         <Grid.Column width={16}>
           <Search
+            className="search-input"
+            size="large"
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={this.handleSearchChange}

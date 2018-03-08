@@ -15,17 +15,16 @@ class TripRow extends React.Component<Props, {}> {
     let mobClass: string;
     iOS ? mobClass = '-ios' : mobClass = '';
     const leg = this.props.legs.Leg;
-    let trBaseClass: string;
-    this.props.visible ? trBaseClass = 'mainTr-selected' : trBaseClass = 'mainTr';
-    this.props.legs.Leg[0].cancelled ? trBaseClass += ' cancelled' : trBaseClass = ' mainTr';
     return (
-      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}} >
-        <div className={"flex-child"} style={{}} >{leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
-        <div className={"flex-child"}>{this.GetLegColors(leg)}</div>
-        <div className={"flex-child"}>{this.GetLegTravelTime(leg)}</div>
-        <div className={"flex-child"} style={{flex: 0}}>{leg[leg.length - 1].Destination.time}</div>
-        <div className="flex-child accessibility" style={{justifyContent: 'center'}}>{this.CheckAccessibility(leg)}</div>
+      <div className="ui grid" >
+      
+        <div className={"three wide column"} style={{alignSelf: 'center'}}> {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
+        <div className={"six wide column"} style={{alignSelf: 'center'}}>{this.GetLegColors(leg)}</div>
+        <div className={"three wide column"} style={{alignSelf: 'center'}}>{this.GetLegTravelTime(leg)}</div>
+        <div className={"three wide column"} style={{alignSelf: 'center'}}>{leg[leg.length - 1].Destination.time}</div>
+        <div className="one wide column accessibility" style={{alignSelf: 'center'}} >{this.CheckAccessibility(leg)}</div>
       </div>
+
       
     );
   }

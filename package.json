@@ -21,6 +21,7 @@
     "lodash": "^4.17.5",
     "mongoose": "^5.0.8",
     "path": "0.12.7",
+    "random-id": "0.0.2",
     "request": "^2.83.0",
     "semantic-ui-react": "^0.78.3"
   }

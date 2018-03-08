@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { SearchButtonProps as Props } from '../../InterfaceCollection';
+import { Button } from 'semantic-ui-react';
 
 class SearchButton extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -7,14 +8,18 @@ class SearchButton extends React.Component<Props, {}> {
   }
   render() {
     return (
-      <div className="form-group">
-        <input
-          type="button"
-          id="visaResorBtn"
-          className="form-control btn btn-success"
-          value="Sök resor"
-          onClick={this.props.handleSubmit}
-        />
+      <div className="search-button-wrapper">
+  
+      <Button 
+      className="search-button"
+      size="large"
+      color="green"
+      onClick={this.props.handleSubmit}
+      >
+      Sök resor
+        </Button>
+
+      
       </div>
     );
   }

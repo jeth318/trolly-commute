@@ -5,55 +5,62 @@ import {
   AccordionItemTitle,
   AccordionItemBody,
 } from 'react-accessible-accordion';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
+import Collapsible from 'react-collapsible';
 import TripRow from './TripRow';
 import TripRowMore from './TripRowMore';
 import { TripTableProps as Props, LegRow } from '../../InterfaceCollection';
 
-class TripAccordion extends React.Component <any, any>{
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showMore: null,
-      visible: true,
-    };
+class TripAccordion extends React.Component<any, any>{
+  
+  onOpening = (i) => {
+    console.log(`Opened number ${i}`);
+  }
+
+  renderTripRow = (i, legs) => {
+    return (<TripRow key={i}
+      id={i}
+      legs={legs}
+      visible={true}
+      onClick={() => { 'click' }} />
+    )
+  }
+
+  renderTripRowMore = (i, legs) => {
+    return (<TripRowMore
+      key={i + 1 * 100}
+      visible={true}
+      legs={legs}
+    />
+    )
   }
 
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
-        <div className="accordion-header">
-          <div className="accordion-header-child">Avgång</div>
-          <div className="accordion-header-child">Linje</div>
-          <div className="accordion-header-child">Restid</div>
-          <div className="accordion-header-child">Ankomst</div>
-          <div className="accordion-header-child"></div>
+        <div className="ui grid accordion-header">
+          <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}} >Avgång</div>
+          <div className="six wide column accordion-header-child" style={{alignSelf: 'center'}}>Linje</div>
+          <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}}>Restid</div>
+          <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}}>Ankomst</div>
+          <div className="one wide column accordion-header-child" style={{alignSelf: 'center'}}></div>
         </div>
-      <Accordion>
-      {this.props.legCollection.map((legs: LegRow, i: number) => {
-        return ([
-          <AccordionItem>
-          <AccordionItemTitle>
-              <TripRow key={i}
-                    id={i}
-                    legs={legs}
-                    visible={true}
-                    onClick={()=>{'click'}}/>
-                
-          </AccordionItemTitle>
-          <AccordionItemBody>
-                <TripRowMore
-                    key={i + 1 * 100}
-                    visible={true}
-                    legs={legs}
-                  />
-          </AccordionItemBody>
-      </AccordionItem>
-        ]);
-      })}
-      </Accordion>
+          <Accordion accordion={true} onChange={(res)=>console.log(res)}>
+            {this.props.legCollection.map((legs: LegRow, i: number) => {
+              return ([
+                <AccordionItem key={i}>
+                  <AccordionItemTitle>
+                    {this.renderTripRow(i, legs)}
+                  </AccordionItemTitle>
+                  <AccordionItemBody >
+                    {this.renderTripRowMore(i, legs)}
+                  </AccordionItemBody>
+                </AccordionItem>
+              ]);
+            })}
+          </Accordion>
       </React.Fragment>
     );
   }

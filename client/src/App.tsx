@@ -2,7 +2,6 @@ import * as React from 'react';
 import API from './api/APIService';
 import Header from './components/Header';
 import Loading from './components/atoms/Loading';
-import TripTable from './components/trips/TripTable';
 import TripAccordion from './components/trips/TripAccordion';
 
 import SearchForm from './components/search/SearchForm';
@@ -10,6 +9,8 @@ import SemanticSearch from './components/search/SemanticSearch';
 
 import { LegCollection } from './InterfaceCollection';
 import './App.css';
+import SearchButton from './components/search/SearchButton';
+import SwapCircle from './components/search/SwapCircle';
 const api = new API;
 
 export interface SearchFormProps {
@@ -35,7 +36,8 @@ interface State {
     fromId: boolean;
     toId: boolean;
     sameDest: boolean;
-  };
+  },
+  swap: boolean;
 }
 
 class App extends React.Component<{}, State> {
@@ -56,6 +58,7 @@ class App extends React.Component<{}, State> {
         toId: false,
         sameDest: false,
       },
+      swap: false,
     };
   }
 
@@ -84,41 +87,40 @@ class App extends React.Component<{}, State> {
     }
   }
   render() {
-    let triptable: JSX.Element |  null;
-    let loading: JSX.Element | null;
-
-    if (this.state.legCollection !== null) {
-      triptable = <TripTable legCollection={this.state.legCollection} />;
-    } else {
-      triptable = null;
-    }
-    if (this.state.loading) {
-      loading = <Loading />;
-      triptable = null;
-    } else {
-      loading = null;
-    }
-
     return (
       <div>
         <Header />
         <SemanticSearch 
           identifier="origin"     
-          handleChange={this.handleChange}
+          handleSelect={this.handleSelect}
         />
         <SemanticSearch 
           identifier="destination"
-          handleChange={this.handleChange}
+          handleSelect={this.handleSelect}
         />
+        <SwapCircle handleSwap={this.handleSwap} />
         {false && this.renderSearchForm()}
-        {loading}
-        {this.state.legCollection && !loading && <TripAccordion legCollection={this.state.legCollection} />}
+        <SearchButton handleSubmit={this.handleSubmit}/>
+        {this.state.loading && <Loading />}
+        {this.state.legCollection && !this.state.loading &&
+           <TripAccordion legCollection={this.state.legCollection} />}
       </div>
     );
   }
 
-  private handleChange = (value, identifier) => {
-    console.log(value, identifier);
+  private handleSelect = (value, identifier) => {
+    if (identifier === 'origin') {
+      this.setState({
+        fromId: value.id,
+        inputFrom: value.fullName
+      })
+    } else {
+      this.setState({
+        toId: value.id,
+        inputTo: value.fullName
+      })
+    }
+    
   }
 
   private renderSearchForm() {
