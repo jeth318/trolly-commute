@@ -19,13 +19,23 @@
     "mongoose": "^5.0.7",
     "npm": "^5.6.0",
     "react": "^16.2.0",
+    "react-accessible-accordion": "^2.2.1",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-autosuggest": "^9.3.2",
     "react-bootstrap": "^0.31.3",
+    "react-collapsible": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-live-clock": "^2.0.2",
     "react-scripts-ts": "2.7.0",
+    "react-timeout": "^1.1.1",
+    "react-timer-mixin": "^0.13.3",
+    "react-transition-group": "^1.2.1",
+    "semantic-ui-react": "^0.78.3",
     "stream": "0.0.2",
     "url": "^0.11.0"
+  },
+  "peerDependencies": {
+    "create-react-class": "^15.6.2"
   },
   "scripts": {
     "start": "react-scripts-ts start",

@@ -127,6 +127,7 @@ class SearchForm extends React.Component<Props, State> {
     return (
       <Autosuggest
         id={id}
+
         shouldRenderSuggestions={this.shouldRenderSuggestions}
         onSuggestionSelected={this.onSuggestionSelected}
         suggestions={suggestions}
@@ -195,11 +196,9 @@ class SearchForm extends React.Component<Props, State> {
     let id = event.currentTarget.id;
     if (id.includes('inputFrom')) {
       this.setState({ valueFrom: newValue, fromId: '' });
-      this.props.resetInputId(id);
 
     } else if (id.includes('inputTo')) {
       this.setState({ valueTo: newValue, toId: '' });
-      this.props.resetInputId(id);
     }
   }
 
@@ -228,11 +227,9 @@ class SearchForm extends React.Component<Props, State> {
   private handleClear = (id: string) => {
     if (id === 'inputFrom') {
       this.setState({ valueFrom: '', fromId: '' });
-      this.props.resetInputId(id);
 
     } else if (id === 'inputTo') {
       this.setState({ valueTo: '', toId: '' });
-      this.props.resetInputId(id);
     }
   }
 

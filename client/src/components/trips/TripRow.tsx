@@ -15,26 +15,23 @@ class TripRow extends React.Component<Props, {}> {
     let mobClass: string;
     iOS ? mobClass = '-ios' : mobClass = '';
     const leg = this.props.legs.Leg;
-    let trBaseClass: string;
-    this.props.visible ? trBaseClass = 'mainTr-selected' : trBaseClass = 'mainTr';
-    this.props.legs.Leg[0].cancelled ? trBaseClass += ' cancelled' : trBaseClass = ' mainTr';
     return (
-      <tr
-        className={trBaseClass + mobClass}
-        onClick={this.onClick}
-      >
-        <td>{leg[0].Origin.time} {this.CheckDelays(leg[0])}</td>
-        <td>{this.GetLegColors(leg)}</td>
-        <td>{this.GetLegTravelTime(leg)}</td>
-        <td>{leg[leg.length - 1].Destination.time}</td>
-        <td className="accessibility">{this.CheckAccessibility(leg)}</td>
-      </tr>
+      <div className="ui grid" >
+      
+        <div className={"three wide column"} style={{alignSelf: 'center'}}> {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
+        <div className={"six wide column"} style={{alignSelf: 'center'}}>{this.GetLegColors(leg)}</div>
+        <div className={"three wide column"} style={{alignSelf: 'center'}}>{this.GetLegTravelTime(leg)}</div>
+        <div className={"three wide column"} style={{alignSelf: 'center'}}>{leg[leg.length - 1].Destination.time}</div>
+        <div className="one wide column accessibility" style={{alignSelf: 'center'}} >{this.CheckAccessibility(leg)}</div>
+      </div>
+
+      
     );
   }
 
-  private onClick = () => {
+  /* private onClick = () => {
     this.props.onClick(this.props.id);
-  }
+  } */
 
   private CheckDelays = (legObj: Leg) => {
     if (legObj.cancelled) {

@@ -1,6 +1,6 @@
 const firebase = require('firebase');
 import * as _ from 'lodash';
-import { LegsRaw, StopLocation } from '../InterfaceCollection';
+import { LegsRaw } from '../InterfaceCollection';
 
 export default class API {
 
@@ -8,16 +8,24 @@ export default class API {
     return new Promise((resolve, reject) => {
       let options = {
         method: 'POST',
-        body: JSON.stringify({ search: search }),
+        body: JSON.stringify({ search: search}),
         headers:  {
           'content-type': 'application/json; charset=utf-8'
         }
       }
       fetch('/api/stops', options)
         .then((res: Response) => res.json())
-        .then((data: StopLocation[]) => {
+        .then((data: any) => {
+          console.log(data, 'APIService');
           // Sort by popularity (weight) and limit to 15 results
-          resolve(_.take(this.sortByWeight(data), 15));
+          let stopLocations = _.take(this.sortByWeight(data.searchResponse), 15);
+          let stopArraySemantic = _.map(stopLocations, (stopLocation: any) => {
+            stopLocation.key = stopLocation._id;
+            stopLocation.title = stopLocation.name;
+            stopLocation.description = stopLocation.city;
+            return stopLocation;
+          })
+          resolve({stopLocations: stopArraySemantic, searchId: data.searchId});
         });
     })
   }
@@ -40,6 +48,7 @@ export default class API {
           });
           return resolve(legsCleaned);
         })
+        .catch((err)=>console.error(err))
     });
   }
 

@@ -178,23 +178,240 @@ th.arrival{
 }
 
 .moreInfoRow {
-  display: none;
- /*  background-color: #5c5c5c;
+  padding: 20px;
+  background-color: grey;
   color: white;
-  font-size: 1em;
-  box-shadow: 0px 0px 0px 3px #545454 inset;
-  transform-origin: top;
-  animation: slideRowUp forwards 150ms ease-in-out; */
 }
-.moreInfoRow-visible {
+
+.accordion-header{
+  margin: 0px !important;
+  margin-top: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  
+  height: 40px;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  
+}
+
+.accordion-header-child {
+  align-self: center;
+  padding: 12px;
+}
+
+.acc-open {
+ /*  max-height: 800px;
+  transition: max-height 1s ease-in; */
+}
+.acc-closed {
+/*   max-height: 0;
+  transition: max-height 0.5s ease-out;
+  overflow: hidden; */
+}
+
+.search-input{
+
+}
+.search-button {
+
+}
+
+.search-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+}
+.column {
+  padding: 0 !important;
+}
+
+.table-header {
+  margin: 0px;
+}
+
+/** ACCORDION **/
+
+/**
+* ----------------------------------------------
+* Demo styles
+* ----------------------------------------------
+**/
+.u-position-absolute {
+  position: absolute;
+}
+
+.u-position-relative {
   position: relative;
-  background-color: #5c5c5c;
-  color: white;
-  font-size: 1em;
-  box-shadow: 0px 0px 0px 3px #545454 inset;
-  transform-origin: top;
-  animation: slideRowDown forwards 150ms ease-in-out;
 }
+
+.accordion {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.accordion__item + .accordion__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.accordion__item--has-icon {
+  position: relative;
+}
+
+.accordion__title {
+  background-color: #f4f4f4;
+  color: #444;
+  cursor: pointer;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  border: none;
+}
+
+.accordion__title:hover {
+  background-color: #ddd;
+}
+
+.accordion__body {
+  display: block;
+  
+  /*animation: fadein 0.35s ease-in;*/
+}
+
+.accordion__body--hidden {
+  display: none;
+  opacity: 0;
+  /*animation: fadein 0.15s ease-in;*/
+}
+
+.accordion__title > *:last-child,
+.accordion__body > *:last-child {
+  margin-bottom: 0;
+  transition: height 400ms easi-in;
+}
+
+.accordion__arrow {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 12px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -6px;
+}
+
+.accordion__arrow::after,
+.accordion__arrow::before {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 2px;
+  background-color: currentColor;
+  content: '';
+}
+
+.accordion__arrow::before {
+  left: 4px;
+  transform: rotate(45deg);
+}
+
+[aria-expanded='true'] .accordion__arrow::before {
+  transform: rotate(-45deg);
+}
+
+.accordion__arrow::after {
+  right: 4px;
+  transform: rotate(-45deg);
+}
+
+[aria-expanded='true'] .accordion__arrow::after {
+  transform: rotate(45deg);
+}
+
+.accordion__arrow::before,
+.accordion__arrow::after {
+  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
+}
+
+/* -------------------------------------------------- */
+/* ---------------- Animation part ------------------ */
+/* -------------------------------------------------- */
+
+@keyframes fadein {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+      opacity: 1;
+  }
+}
+@keyframes fadeout {
+  0% {
+      opacity: 1;
+  }
+
+  100% {
+      opacity: 0;
+  }
+}
+
+@keyframes move-down {
+  0% {
+      transform: translateY(0);
+  }
+  10% {
+      transform: translateY(0);
+  }
+  20% {
+      transform: translateY(5px);
+  }
+  30% {
+      transform: translateY(0);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+@keyframes move-up {
+  0% {
+      transform: translateY(0);
+  }
+  10% {
+      transform: translateY(0);
+  }
+  20% {
+      transform: translateY(-5px);
+  }
+  30% {
+      transform: translateY(0);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+.accordion__title--animated:hover .accordion__arrow {
+  animation-name: move-down;
+  animation-duration: 1.5s;
+}
+
+.accordion__title--animated[aria-expanded='true']:hover .accordion__arrow {
+  animation-name: move-up;
+  animation-duration: 1.5s;
+}
+
+/*** ACCORDION END ***/
 
 @keyframes slideRowDown {
   from { transform: scaleY(0); }
@@ -315,7 +532,7 @@ input.error {
   z-index: -1;
 }
 
-.loading {
+.loading-symbol {
   margin-top: 50px;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 2s; /* Firefox < 16 */
@@ -393,6 +610,8 @@ img.loading-img {
        animation: fadein 0.5s;
 }
 
+/** PROBLEM END **/
+
 table tbody tr td {
   vertical-align: middle !important;
 }
@@ -468,7 +687,7 @@ table tbody {
   background-color: rgba(62, 62, 62, 0.3);
 }
 
-.mainTr:hover {
+/* .mainTr:hover {
   background-color: lightgrey;
   border-radius: 10px;
 }
@@ -482,10 +701,23 @@ table tbody {
 }
 .mainTr-selected-mobClass:hover {
   border-radius: 10px;
-}
+} */
 
 #showOptionsDiv {
   margin: 10px;
+}
+
+.ui.input{
+  width: 100%;
+}
+.ui.grid{
+  margin: 5px;
+  padding: 5px;
+}
+.results.transition {
+  width: 100% !important;
+  overflow-y: auto;
+  max-height: 290px;
 }
 
 @media screen and (min-width: 1279px) {
@@ -558,19 +790,19 @@ table tbody {
   .inner-container {
     padding: 0;
   }
-  body {
+ /*  body {
     height: auto;
-  }
+  } */
   .wideRow {
     display: none;
   }
-  .container-fluid {
+ /*  .container-fluid {
     width: 100%;
     margin-left: 0%;
     margin-right: 0%;
     padding-left: 0px;
     padding-right: 0px;
-  }
+  } */
 } /**** AUTOCOMPLETE STYLING  ****/
 
 .ui-autocomplete {
