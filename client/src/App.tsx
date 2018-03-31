@@ -3,12 +3,11 @@ import API from './api/APIService';
 import Header from './components/Header';
 import Loading from './components/atoms/Loading';
 import TripAccordion from './components/trips/TripAccordion';
-
 import SearchForm from './components/search/SearchForm';
 import SemanticSearch from './components/search/SemanticSearch';
-
 import { LegCollection } from './InterfaceCollection';
 import './App.css';
+import Error from './components/atoms/Error';
 import SearchButton from './components/search/SearchButton';
 import SwapCircle from './components/search/SwapCircle';
 const api = new API;
@@ -38,6 +37,7 @@ interface State {
     sameDest: boolean;
   },
   swap: boolean;
+  isSwapped: boolean;
 }
 
 class App extends React.Component<{}, State> {
@@ -59,6 +59,7 @@ class App extends React.Component<{}, State> {
         sameDest: false,
       },
       swap: false,
+      isSwapped: false
     };
   }
 
@@ -93,11 +94,24 @@ class App extends React.Component<{}, State> {
         <SemanticSearch 
           identifier="origin"     
           handleSelect={this.handleSelect}
+          handleChange={this.handleChange}
+          swap={this.state.swap}
+          value={this.state.inputFrom}
+          storedLocation={{name: this.state.inputFrom, id: this.state.fromId}}  
         />
+        {this.state.errors.fromId && <Error type="from"/>}
+
         <SemanticSearch 
           identifier="destination"
           handleSelect={this.handleSelect}
-        />
+          swap={this.state.swap}
+          handleChange={this.handleChange}          
+          value={this.state.inputTo}       
+          storedLocation={{name: this.state.inputTo, id: this.state.toId}}
+        />    
+        {this.state.errors.toId && <Error type="to"/>}
+        {this.state.errors.sameDest && <Error type="same"/>}
+           
         <SwapCircle handleSwap={this.handleSwap} />
         {false && this.renderSearchForm()}
         <SearchButton handleSubmit={this.handleSubmit}/>
@@ -106,6 +120,16 @@ class App extends React.Component<{}, State> {
            <TripAccordion legCollection={this.state.legCollection} />}
       </div>
     );
+  }
+
+
+  private handleChange = (value, identifier) => {
+    console.log(value);
+    if (identifier === 'origin') {
+      this.resetInputId(identifier, value)
+    } else {
+      this.resetInputId(identifier, value)
+    }
   }
 
   private handleSelect = (value, identifier) => {
@@ -126,7 +150,6 @@ class App extends React.Component<{}, State> {
   private renderSearchForm() {
     return (
       <SearchForm
-          resetInputId={this.resetInputId}
           handleInputFrom={this.handleInputFrom}
           handleInputTo={this.handleInputTo}
           handleSubmit={this.handleSubmit}
@@ -158,9 +181,10 @@ class App extends React.Component<{}, State> {
     });
   }
 
-  private resetInputId = (id: string) =>  {
-    if (id.includes('inputFrom')) {
+  private resetInputId = (identifier: string, value) =>  {
+    if (identifier === "origin") {
       this.setState({
+        inputFrom: value,
         fromId: '',
         errors: {
           fromId: false,
@@ -168,8 +192,9 @@ class App extends React.Component<{}, State> {
           sameDest: false
         }
       });
-    } else if (id.includes('inputTo')) {
+    } else {
       this.setState({
+        inputTo: value,
         toId: '',
         errors: {
           fromId: false,
@@ -201,7 +226,7 @@ class App extends React.Component<{}, State> {
     let toId = this.state.toId;
 
     if (fromId !== '' && toId !== '' && fromId !== toId) {
-     
+     console.log('All hood')
       this.preventSpam();      
       api.GetTrips(this.state.fromId, this.state.toId)
         .then((res: LegCollection) =>  {
@@ -213,16 +238,22 @@ class App extends React.Component<{}, State> {
       this.setLocalStorage();
 
     } else {
-      if (fromId === '' && toId) {
+      console.log(typeof fromId)
+      console.log(typeof toId)
+      if (fromId === '' && toId !== '') {
+        console.log('first err')
         fromIdError = true;
         toIdError = false;
-      } else if (toId === '' && fromId)  {
+      } else if (toId === '' && fromId !== '')  {
+        console.log('second err')        
         toIdError = true;
         fromIdError = false;
       } else if (fromId === '' && toId === '') {
+        console.log('third err')                
         fromIdError = true;
         toIdError = true;
       } else if (fromId === toId) {
+        console.log('fouth err')        
         sameDestError = true;
       }
       this.setState({ errors: { fromId: fromIdError, toId: toIdError, sameDest: sameDestError }});
@@ -247,8 +278,16 @@ class App extends React.Component<{}, State> {
         fromId: errorToId,
         toId: errorFromId,
         sameDest: sameDest
-      }
+      },
+      swap: true,
+      isSwapped: !this.state.isSwapped
     });
+
+    setTimeout(() => {
+      this.setState(({
+        swap: false,
+      }))
+    }, 600);
   }
 }
 export default App;

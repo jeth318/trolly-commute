@@ -184,6 +184,7 @@ th.arrival{
 }
 
 .accordion-header{
+  margin: 0px !important;
   margin-top: 20px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -232,7 +233,9 @@ th.arrival{
   padding: 0 !important;
 }
 
-accordion-header-child
+.table-header {
+  margin: 0px;
+}
 
 /** ACCORDION **/
 
@@ -266,7 +269,7 @@ accordion-header-child
   background-color: #f4f4f4;
   color: #444;
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   text-align: left;
   border: none;
@@ -279,13 +282,13 @@ accordion-header-child
 .accordion__body {
   display: block;
   
-  animation: fadein 0.35s ease-in;
+  /*animation: fadein 0.35s ease-in;*/
 }
 
 .accordion__body--hidden {
   display: none;
   opacity: 0;
-  animation: fadein 0.15s ease-in;
+  /*animation: fadein 0.15s ease-in;*/
 }
 
 .accordion__title > *:last-child,
@@ -708,8 +711,8 @@ table tbody {
   width: 100%;
 }
 .ui.grid{
-  margin: 0;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
 }
 .results.transition {
   width: 100% !important;

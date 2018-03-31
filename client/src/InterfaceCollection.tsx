@@ -83,7 +83,6 @@ export interface TripRowMoreProps {
 }
 
 export interface SearchFormProps {
-  resetInputId: (id: string) => void;
   visibleFlash: boolean;
   handleInputFrom: (value: string, id: string) => void;
   handleInputTo: (value: string, id: string) => void;
