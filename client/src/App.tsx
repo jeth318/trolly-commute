@@ -124,7 +124,6 @@ class App extends React.Component<{}, State> {
 
 
   private handleChange = (value, identifier) => {
-    console.log(value);
     if (identifier === 'origin') {
       this.resetInputId(identifier, value)
     } else {
@@ -226,7 +225,6 @@ class App extends React.Component<{}, State> {
     let toId = this.state.toId;
 
     if (fromId !== '' && toId !== '' && fromId !== toId) {
-     console.log('All hood')
       this.preventSpam();      
       api.GetTrips(this.state.fromId, this.state.toId)
         .then((res: LegCollection) =>  {
@@ -238,22 +236,16 @@ class App extends React.Component<{}, State> {
       this.setLocalStorage();
 
     } else {
-      console.log(typeof fromId)
-      console.log(typeof toId)
       if (fromId === '' && toId !== '') {
-        console.log('first err')
         fromIdError = true;
         toIdError = false;
       } else if (toId === '' && fromId !== '')  {
-        console.log('second err')        
         toIdError = true;
         fromIdError = false;
       } else if (fromId === '' && toId === '') {
-        console.log('third err')                
         fromIdError = true;
         toIdError = true;
       } else if (fromId === toId) {
-        console.log('fouth err')        
         sameDestError = true;
       }
       this.setState({ errors: { fromId: fromIdError, toId: toIdError, sameDest: sameDestError }});

@@ -16,7 +16,6 @@ export default class API {
       fetch('/api/stops', options)
         .then((res: Response) => res.json())
         .then((data: any) => {
-          console.log(data, 'APIService');
           // Sort by popularity (weight) and limit to 15 results
           let stopLocations = _.take(this.sortByWeight(data.searchResponse), 15);
           let stopArraySemantic = _.map(stopLocations, (stopLocation: any) => {

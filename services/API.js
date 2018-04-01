@@ -23,7 +23,7 @@ FetchAccessToken = () => {
       err && reject(err);
       let responseBody = res.body ? JSON.parse(res.body) : null;
       accessToken = responseBody.access_token;
-      resolve(responseBody.access_token);
+      resolve(responseBody.access_token); 
     }
     );
   })
@@ -70,7 +70,8 @@ GetTripFromSearch = (fromId, toId) => {
           FetchAccessToken()
             .then((mess) => {
               resolve(GetTripFromSearch(fromId, toId))
-            });
+            })
+            .catch((err)=>console.error(err))
           return null;
         }
         attempts = 0;
