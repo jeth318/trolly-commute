@@ -89,7 +89,8 @@ class App extends React.Component<{}, State> {
   }
   render() {
     return (
-      <div>
+      <div className="ui stackable two column grid">
+      <div className="ui column">
         <Header />
         <SemanticSearch 
           identifier="origin"     
@@ -115,9 +116,12 @@ class App extends React.Component<{}, State> {
         <SwapCircle handleSwap={this.handleSwap} />
         {false && this.renderSearchForm()}
         <SearchButton handleSubmit={this.handleSubmit}/>
+        </div>
+        <div className="ui column">
         {this.state.loading && <Loading />}
         {this.state.legCollection && !this.state.loading &&
            <TripAccordion legCollection={this.state.legCollection} />}
+           </div>
       </div>
     );
   }
