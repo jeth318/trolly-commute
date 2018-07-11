@@ -89,7 +89,8 @@ class App extends React.Component<{}, State> {
   }
   render() {
     return (
-      <div className="ui stackable two column grid">
+      <div className="app-wrapper">
+      <div className="ui stackable">
       <div className="ui column">
         <Header />
         <SemanticSearch 
@@ -122,6 +123,7 @@ class App extends React.Component<{}, State> {
         {this.state.legCollection && !this.state.loading &&
            <TripAccordion legCollection={this.state.legCollection} />}
            </div>
+      </div>
       </div>
     );
   }

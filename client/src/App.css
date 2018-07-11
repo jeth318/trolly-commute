@@ -5,6 +5,15 @@
   min-height: 1vh;
 }
 
+.app-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.stackable {
+  width: 100%;
+  max-width: 500px;
+}
 @keyframes slideUp {
   0%    {transform: translateY(63px) scale(0.99)};
   50%   {transform:  scale(0.2)};
@@ -708,7 +717,6 @@ table tbody {
 
 @media screen and (max-width: 470px) {
   body {
-    padding: 2px;
     height: 100%;
   }
   .heading-title {
