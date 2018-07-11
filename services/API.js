@@ -76,6 +76,7 @@ GetTripFromSearch = (fromId, toId) => {
         }
         attempts = 0;
         let responseBody = JSON.parse(res.body.toString());
+        console.log(responseBody.TripList.Trip[0]);
         return resolve(responseBody);
       }
     );
