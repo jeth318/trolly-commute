@@ -1,6 +1,6 @@
 *node_modules
 .history/
 .DS_STORE
-.client/build/
+**/*build/
 .env
 .build/
