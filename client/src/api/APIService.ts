@@ -1,4 +1,3 @@
-const firebase = require('firebase');
 import * as _ from 'lodash';
 import { LegsRaw } from '../InterfaceCollection';
 
@@ -52,25 +51,6 @@ export default class API {
     });
   }
 
-  // Stores travelinformation in firebase.
-  StoreSearchInformation = (fromId: string, toId: string) => {
-    return new Promise((resolve, reject) => {
-      let time = new Date().toUTCString();
-      let ref = firebase.database().ref();
-      let messageRef = ref.child('trip-searches');
-
-      try {
-        messageRef.push({
-          time: time,
-          from: fromId,
-          to: toId
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
   private sortByWeight(stopLocations) {
     return _.sortBy(stopLocations, ['weight']).reverse();
   }

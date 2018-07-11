@@ -10,7 +10,6 @@
     "@types/react-autosuggest": "^8.0.2",
     "@types/request": "^2.0.6",
     "classnames": "^2.2.5",
-    "firebase": "^4.5.0",
     "form-data": "^2.3.1",
     "http": "0.0.0",
     "https": "^1.0.0",
