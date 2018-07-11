@@ -3,3 +3,4 @@
 .DS_STORE
 client/build/
 .env
+.build/
