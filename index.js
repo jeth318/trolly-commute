@@ -4,7 +4,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var StopLocation = require('./db/mongoose/StopLocationModel');
-var api = require('./services/api');
+var api = require('./services/API');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://root:root@ds141068.mlab.com:41068/trollycommute')
