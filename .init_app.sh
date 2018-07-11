@@ -11,6 +11,9 @@ if [ -d "$node_modules" ]; then
   sudo rm -r node_modules
 fi
 npm i
+if [ -d "$build" ]; then
+  sudo rm -r build
+fi
 npm run build
 pm2 restart index.js --watch
 echo "DONE!"
