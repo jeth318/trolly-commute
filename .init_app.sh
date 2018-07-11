@@ -2,10 +2,14 @@
 # RUN ---ONLY--- ON DIGITALOCEAN.
 
 git pull
-sudo rm -r node_modules
+if [ ! -d "$node_modules" ]; then
+  sudo rm -r node_modules
+fi
 npm i
 cd client
-sudo rm -r node_modules
+if [ ! -d "$node_modules" ]; then
+  sudo rm -r node_modules
+fi
 npm i
 npm run build
 echo "DONE!"
