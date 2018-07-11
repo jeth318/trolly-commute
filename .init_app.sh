@@ -12,4 +12,5 @@ if [ ! -d "$node_modules" ]; then
 fi
 npm i
 npm run build
+pm2 restart index.js --watch
 echo "DONE!"
