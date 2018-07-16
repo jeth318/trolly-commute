@@ -222,23 +222,6 @@ th.arrival{
   padding: 12px;
 }
 
-.acc-open {
- /*  max-height: 800px;
-  transition: max-height 1s ease-in; */
-}
-.acc-closed {
-/*   max-height: 0;
-  transition: max-height 0.5s ease-out;
-  overflow: hidden; */
-}
-
-.search-input{
-
-}
-.search-button {
-
-}
-
 .search-button-wrapper {
   display: flex;
   justify-content: center;
