@@ -494,19 +494,16 @@ input.error {
 
 #wallpaperSmall {
   position: absolute;
-  position: fixed;
-  width: auto;
-  height: auto;
-  left: 0px;
+  height: 100vh;
+  max-height: 1000px;
+  left: -400px;
   top: 0px;
   z-index: -1;
 }
 
 #wallpaperWide {
   position: absolute;
-  position: fixed;
-  width: auto;
-  height: auto;
+  height: 100vh;
   left: 0px;
   top: 0px;
   z-index: -1;

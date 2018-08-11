@@ -11,7 +11,7 @@ class Header extends React.Component {
           <Clock 
               format={'HH:mm:ss'} 
               ticking={true} 
-              timezone={'US/Pacific'} 
+              timezone={'SE'} 
           />
         </div>
         <h2 id="subheader">Västtrafik Trip Planning</h2>
