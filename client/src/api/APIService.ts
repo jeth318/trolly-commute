@@ -24,7 +24,8 @@ export default class API {
             return stopLocation;
           })
           resolve({stopLocations: stopArraySemantic, searchId: data.searchId});
-        });
+        })
+        .catch((err)=>err);
     })
   }
   
@@ -42,6 +43,8 @@ export default class API {
         .then((res) => {
           let legs: LegsRaw[] = res.TripList.Trip;
           let legsCleaned = _.map(legs, (trip: LegsRaw) => {
+            console.log(trip);
+            
             return Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] };
           });
           return resolve(legsCleaned);

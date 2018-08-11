@@ -5,6 +5,8 @@ var tokenUrl = 'https://api.vasttrafik.se/token';
 var allStopsUrl = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.allstops?format=json';
 var vastTrafikUser = process.env.REACT_APP_VASTTRAFIK_KEY;
 var vastTrafikSecret = process.env.REACT_APP_VASTTRAFIK_SECRET;
+//console.log(process.env);
+
 module.exports = {
     tripBaseUrl,
     tokenUrl,
