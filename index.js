@@ -7,7 +7,9 @@ var StopLocation = require('./db/mongoose/StopLocationModel');
 var api = require('./services/API');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://root:root@ds141068.mlab.com:41068/trollycommute')
+/* MLAB */
+/* 'mongodb://root:root@ds141068.mlab.com:41068/trollycommute'  */  
+mongoose.connect('mongodb://localhost/trollycommute')
 .then(()=>console.log('Esablished connection to mLab...'))
 .catch((err)=>res.send(err))
 

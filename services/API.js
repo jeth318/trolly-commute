@@ -7,6 +7,7 @@ var conf = require('../server-config/config');
 
 // Grab token from Västtrafik
 FetchAccessToken = () => {
+  
   let options = {
     url: conf.tokenUrl,
     method: 'POST',
@@ -32,7 +33,6 @@ FetchAccessToken = () => {
 GetMatchingStops = (query) => {
   return StopLocation.find({ 'fullName': { '$regex': query, $options: 'i' } })
 }
-
 GetAllStopLocations = () => {
   return StopLocation.find({});
 }
@@ -62,13 +62,17 @@ GetTripFromSearch = (fromId, toId) => {
           return reject(err);
         }
         if (attempts === 3) {
+          
           attempts = 0;
           return resolve('Problem getting valid token')
         }
         if (res.statusCode === 401) {
+          
           attempts++;
           FetchAccessToken()
             .then((mess) => {
+              console.log(mess);
+              
               resolve(GetTripFromSearch(fromId, toId))
             })
             .catch((err)=>console.error(err))

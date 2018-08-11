@@ -9,4 +9,4 @@ const StopLocationSchema = mongoose.Schema({
     weight: Number
 });
 
-module.exports = mongoose.model('StopLocation', StopLocationSchema, 'stop-locations');
+module.exports = mongoose.model('StopLocation', StopLocationSchema, 'stoplocations');

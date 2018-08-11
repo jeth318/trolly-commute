@@ -13,6 +13,8 @@ class TripRow extends React.Component<Props, {}> {
 
   render() {
     let mobClass: string;
+    //console.log(this.props.legs);
+    
     iOS ? mobClass = '-ios' : mobClass = '';
     const leg = this.props.legs.Leg;
     return (
