@@ -1,6 +1,6 @@
 # BUILD APP FOR PRODUCTION ON SERVER. 
 # RUN ---ONLY--- ON DIGITALOCEAN.
-
+git stash
 git pull
 if [ -d "$node_modules" ]; then
   sudo rm -r node_modules
@@ -15,5 +15,6 @@ if [ -d "$build" ]; then
   sudo rm -r build
 fi
 npm run build
+git stash clear
 pm2 restart index.js --watch
 echo "DONE!"
