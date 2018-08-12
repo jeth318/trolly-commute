@@ -33,7 +33,7 @@ app.listen(app.get('port'), function(){
 // Main route
 app.get('/', function(req, res) {
 	res.set('Content-Type', 'text/html')
-	.sendFile(path.join(__dirname, '/public/index.html'))
+	.sendFile(path.join(__dirname, '/client/build/index.html'))
 });
 
 

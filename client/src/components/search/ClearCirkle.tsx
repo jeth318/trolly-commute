@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { ClearCirkleProps as Props } from '../../InterfaceCollection';
 class ClearCirkle extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+  
   render() {
     return (
       <span
@@ -13,6 +10,7 @@ class ClearCirkle extends React.Component<Props, {}> {
       />
     );
   }
+  
   private onClick = (e: any) => {
     let id = e.currentTarget.previousSibling.firstChild.id;
     this.props.onClick(id);

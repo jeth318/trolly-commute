@@ -2,9 +2,7 @@ import * as React from 'react';
 import { TripRowMoreProps as Props, Leg } from '../../InterfaceCollection';
 
 class TripRowMore extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-  }
+ 
   trimName = (name: string) => {
     return name.split(',', 1);
   }
@@ -32,6 +30,7 @@ class TripRowMore extends React.Component<Props, {}> {
       );
     });
   }
+
   render() {
     return (
       <div className='moreInfoRow'>

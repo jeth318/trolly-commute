@@ -95,15 +95,6 @@ export interface SearchFormProps {
   };
 }
 
-export interface SuggestionProps {
-  id: string;
-  lat: number;
-  lon: number;
-  name: string;
-  fullName: string;
-  weight: number;
-}
-
 export interface ErrorProps {
   type: string;
 }
@@ -113,17 +104,4 @@ export interface ClearCirkleProps {
 }
 export interface SearchButtonProps {
   handleSubmit: () => void;
-}
-
-export interface FlashProps {
-  type: FlashType;
-  title: string;
-  message: string;
-  visible: boolean;
-}
-
-export enum FlashType {
-  INFO,
-  WARNING,
-  ERROR,
 }

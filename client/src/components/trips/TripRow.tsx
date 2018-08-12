@@ -1,39 +1,21 @@
 import * as React from 'react';
 import { TripRowProps as Props, Leg } from '../../InterfaceCollection';
 import * as moment from 'moment';
-const iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
 class TripRow extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      visible: false
-    };
-  }
-
+  
   render() {
-    let mobClass: string;
-    //console.log(this.props.legs);
-    
-    iOS ? mobClass = '-ios' : mobClass = '';
     const leg = this.props.legs.Leg;
     return (
       <div className="ui grid" >
-      
-        <div className={"three wide column"} style={{alignSelf: 'center'}}> {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
-        <div className={"six wide column"} style={{alignSelf: 'center'}}>{this.GetLegColors(leg)}</div>
+        <div className={"four wide column"} style={{alignSelf: 'center'}}> {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
+        <div className={"five wide column"} style={{alignSelf: 'center'}}>{this.GetLegColors(leg)}</div>
         <div className={"three wide column"} style={{alignSelf: 'center'}}>{this.GetLegTravelTime(leg)}</div>
         <div className={"three wide column"} style={{alignSelf: 'center'}}>{leg[leg.length - 1].Destination.time}</div>
         <div className="one wide column accessibility" style={{alignSelf: 'center'}} >{this.CheckAccessibility(leg)}</div>
       </div>
-
-      
     );
   }
-
-  /* private onClick = () => {
-    this.props.onClick(this.props.id);
-  } */
 
   private CheckDelays = (legObj: Leg) => {
     if (legObj.cancelled) {
@@ -41,7 +23,6 @@ class TripRow extends React.Component<Props, {}> {
     }
     if (legObj.Origin.rtTime != null) {
       let a = moment(legObj.Origin.date + 'T' + legObj.Origin.time);
-
       let b = moment(legObj.Origin.date + 'T' + legObj.Origin.rtTime);
       let minDiff = b.diff(a, 'minutes');
 

@@ -3,7 +3,6 @@ import API from './api/APIService';
 import Header from './components/Header';
 import Loading from './components/atoms/Loading';
 import TripAccordion from './components/trips/TripAccordion';
-import SearchForm from './components/search/SearchForm';
 import SemanticSearch from './components/search/SemanticSearch';
 import { LegCollection } from './InterfaceCollection';
 import './App.css';
@@ -115,7 +114,6 @@ class App extends React.Component<{}, State> {
         {this.state.errors.sameDest && <Error type="same"/>}
            
         <SwapCircle handleSwap={this.handleSwap} />
-        {false && this.renderSearchForm()}
         <SearchButton handleSubmit={this.handleSubmit}/>
         </div>
         <div className="ui column">
@@ -150,19 +148,6 @@ class App extends React.Component<{}, State> {
       })
     }
     
-  }
-
-  private renderSearchForm() {
-    return (
-      <SearchForm
-          handleInputFrom={this.handleInputFrom}
-          handleInputTo={this.handleInputTo}
-          handleSubmit={this.handleSubmit}
-          errors={this.state.errors}
-          handleSwap={this.handleSwap}
-          visibleFlash={this.state.visibleFlash}
-        />
-    )
   }
 
   private setLocalStorage() {

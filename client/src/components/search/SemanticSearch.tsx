@@ -62,6 +62,7 @@ class SemanticSearch extends React.Component<any, any>{
         })
     }
   }
+  
   private handleSearchChange = (e, { value }) => {
     const self = this;
     this.props.handleChange(value, this.props.identifier)
