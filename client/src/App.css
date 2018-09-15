@@ -1,3 +1,6 @@
+body {
+  background-image: url("/images/wallpaper_rails_min.jpg");
+}
 #root {
   position: absolute;
   top: 0;
@@ -694,6 +697,7 @@ table tbody {
 @media screen and (max-width: 470px) {
   body {
     height: 100%;
+    background-image: url("/images/wallpaper_rails_min.jpg");
   }
   .heading-title {
     display: 40px;
