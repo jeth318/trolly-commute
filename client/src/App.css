@@ -51,7 +51,7 @@ body {
 }
 
 #wallpaperSmall {
-  height: auto;
+  // height: auto;
 }
 #wallpaperWide {
   display: none;
@@ -493,12 +493,8 @@ input.error {
 }
 
 #wallpaperSmall {
-  position: absolute;
-  height: 100vh;
-  max-height: 1000px;
-  left: -400px;
-  top: 0px;
-  z-index: -1;
+  
+  // width: 100vw;
 }
 
 #wallpaperWide {
