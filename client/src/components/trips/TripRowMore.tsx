@@ -3,9 +3,8 @@ import { TripRowMoreProps as Props, Leg } from '../../InterfaceCollection';
 
 class TripRowMore extends React.Component<Props, {}> {
  
-  trimName = (name: string) => {
-    return name.split(',', 1);
-  }
+  trimName = (name: string) => name.split(',', 1)
+  
   renderMoreInfo = () => {
     const lastLeg = this.props.legs.Leg.length - 1;
     return this.props.legs.Leg.map((leg: Leg, i: number) => {
@@ -40,15 +39,7 @@ class TripRowMore extends React.Component<Props, {}> {
     );
   }
 
-  private getWalk = () => {
-    return (
-      <img
-        src={__dirname + '../../../images/walk.png'}
-        style={{ backgroundColor: 'white' }}
-        className="legLogo-special"
-      />
-    );
-  }
+  private getWalk = () => <img src={__dirname + '../../../images/walk.png'} style={{ backgroundColor: 'white' }} className="legLogo-special" />;
 
   private getTrack = (track: any) => {
     if (!track) {

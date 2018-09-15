@@ -12,24 +12,9 @@ import { TripTableProps as Props, LegRow } from '../../InterfaceCollection';
 
 class TripAccordion extends React.Component<any, any>{
   
-  renderTripRow = (i, legs) => {
-    return (<TripRow key={i}
-      id={i}
-      legs={legs}
-      visible={true}
-      onClick={() => { 'click' }} />
-    )
-  }
-
-  renderTripRowMore = (i, legs) => {
-    return (<TripRowMore
-      key={i + 1 * 100}
-      visible={true}
-      legs={legs}
-    />
-    )
-  }
-
+  renderTripRow = (i, legs) => <TripRow key={i} id={i} legs={legs} visible={true} onClick={() => { 'click' }} />
+  renderTripRowMore = (i, legs) => <TripRowMore key={i + 1 * 100} visible={true} legs={legs} />
+    
   render() {
     return (
       <React.Fragment>

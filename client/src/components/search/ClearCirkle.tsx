@@ -11,9 +11,7 @@ class ClearCirkle extends React.Component<Props, {}> {
     );
   }
   
-  private onClick = (e: any) => {
-    let id = e.currentTarget.previousSibling.firstChild.id;
-    this.props.onClick(id);
-  }
+  private onClick = (e: any) => this.props.onClick(e.currentTarget.previousSibling.firstChild.id);
+  
 }
 export default ClearCirkle;

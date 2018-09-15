@@ -1,6 +1,12 @@
 body {
   background-image: url("/images/wallpaper_rails_min.jpg");
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
 }
+
 #root {
   position: absolute;
   top: 0;
@@ -37,13 +43,6 @@ body {
   animation: slideDown 600ms;
 }
 
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: black;
-  background-repeat: no-repeat;
-  background-size: cover;
-  cursor: pointer;
-}
 .search-area {
  padding: 0px !important;
  margin: 0 !important;
@@ -51,13 +50,6 @@ body {
 .table-area {
   padding: 0px;
   margin: 0px;
-}
-
-#wallpaperSmall {
-  // height: auto;
-}
-#wallpaperWide {
-  display: none;
 }
 
 .logo {
@@ -284,7 +276,6 @@ th.arrival{
 
 .accordion__body {
   display: block;
-  
   /*animation: fadein 0.35s ease-in;*/
 }
 
@@ -495,19 +486,6 @@ input.error {
   font-size: 20px;
 }
 
-#wallpaperSmall {
-  
-  // width: 100vw;
-}
-
-#wallpaperWide {
-  position: absolute;
-  height: 100vh;
-  left: 0px;
-  top: 0px;
-  z-index: -1;
-}
-
 .loading-symbol {
   margin-top: 50px;
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -667,9 +645,6 @@ table tbody {
     top: 0px;
     z-index: -1;
   }
-}
-
-@media screen and (min-width: 992px) {
 }
 
 @media screen and (min-width: 768px) {

@@ -30,18 +30,10 @@ FetchAccessToken = () => {
   })
 }
 
-GetMatchingStops = (query) => {
-  return StopLocation.find({ 'fullName': { '$regex': query, $options: 'i' } })
-}
-GetAllStopLocations = () => {
-  return StopLocation.find({});
-}
-GetOneStopLocation = (id) => {
-  return StopLocation.findOne({ id: id });
-}
-InsertStopLocations = (data) => {
-  return StopLocation.insertMany(data);
-}
+GetMatchingStops = query => StopLocation.find({ 'fullName': { '$regex': query, $options: 'i' } })
+GetAllStopLocations = () => StopLocation.find({});
+GetOneStopLocation = id => StopLocation.findOne({ id: id });
+InsertStopLocations = data => StopLocation.insertMany(data);
 
 // Performs a API-request to Västrafik, using accesstoken and searchparams
 GetTripFromSearch = (fromId, toId) => {
