@@ -3,12 +3,14 @@ import * as React from 'react';
 import { Search, Grid } from 'semantic-ui-react'
 import API from '../../api/APIService';
 import classNames from 'classnames';
+import { SemanticSearchProps as Props } from '../../InterfaceCollection';
 
 const api = new API();
 
-class SemanticSearch extends React.Component<any, any>{
-  constructor() {
-    super({});
+class SemanticSearch extends React.Component<Props, any> {
+  constructor(props: Props) {
+    super(props);
+
     this.state = {
       isLoading: false,
       results: [],
@@ -16,26 +18,26 @@ class SemanticSearch extends React.Component<any, any>{
       typeingTimeOut: 0
     };
   }
-  componentWillMount() {
+
+  componentDidMount() {
     this.resetComponent()
-    if (this.props.storedLocation) {
+    if (this.props.storedlocation) {
       this.setState({
-        value: this.props.storedLocation.name.split(',')[0]
+        value: this.props.storedlocation.name.split(',')[0]
       },this.doSearch)
     }
   }
 
   componentWillReceiveProps(){
     // If swap is true, set state with value from prop and trigger new search to update the results.
-    if (this.props.swap) {
-    this.setState({value: this.props.value}, this.doSearch)
-    }
+    this.props.swap && this.setState({value: this.props.value}, this.doSearch)
   }
 
   private formGroupFromClasses = () => {
+    const { identifier, swap } = this.props;
     return classNames({
-    'slideUp': this.props.identifier === 'origin' && this.props.swap,
-    'slideDown': this.props.identifier === 'destination' && this.props.swap
+    'slideUp': identifier === 'origin' && swap,
+    'slideDown': identifier === 'destination' && swap
   })};
 
   private resetComponent = () => this.setState({
@@ -47,8 +49,7 @@ class SemanticSearch extends React.Component<any, any>{
 
   private handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title })
-    { }
-    this.props.handleSelect(result, this.props.identifier)
+    this.props.onSelect(result, this.props.identifier)
   }
 
   private doSearch = () => {
@@ -65,7 +66,7 @@ class SemanticSearch extends React.Component<any, any>{
   
   private handleSearchChange = (e, { value }) => {
     const self = this;
-    this.props.handleChange(value, this.props.identifier)
+    this.props.onChange(value, this.props.identifier)
     self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut)
 
     self.setState({
@@ -100,7 +101,6 @@ class SemanticSearch extends React.Component<any, any>{
             results={results}
             value={this.props.value}
             minCharacters={3}
-            {...this.props}
           />
         </Grid.Column>
       </Grid>

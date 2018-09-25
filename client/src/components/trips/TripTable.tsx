@@ -47,18 +47,8 @@ class TripTable extends React.Component<any, State> {
     );
   }
 
-  private handleClick = (id: number) => {
-    this.state.showMore === id ?
-      this.setState({ showMore: null }) :
-      this.setState({ showMore: id });
-  }
+  private handleClick = (id: number) => this.setState({ showMore: this.state.showMore === id ? id : null})
   
-  private isVisible = (i: number) => {
-    if (this.state.showMore === i) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  private isVisible = (i: number) => this.state.showMore === i;
 }
 export default TripTable;

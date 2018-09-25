@@ -11,15 +11,6 @@ import SearchButton from './components/search/SearchButton';
 import SwapCircle from './components/search/SwapCircle';
 const api = new API;
 
-export interface SearchFormProps {
-  resetInputId: (id: string) => void;
-  handleInputTo: (value: string, id: string) => void;
-  handleInputFrom: (value: string, id: string) => void;
-  handleSubmit: () => void;
-  error: JSX.Element |  null;
-  handleSwap: () => void;
-}
-
 interface State {
   inputFrom: string;
   inputTo: string;
@@ -62,7 +53,7 @@ class App extends React.Component<{}, State> {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let from = localStorage.getItem('from');
     let fromId = localStorage.getItem('fromId');
     let to = localStorage.getItem('to');
@@ -86,6 +77,7 @@ class App extends React.Component<{}, State> {
       });
     }
   }
+
   render() {
     return (
       <div className="app-wrapper">
@@ -94,21 +86,21 @@ class App extends React.Component<{}, State> {
         <Header />
         <SemanticSearch 
           identifier="origin"     
-          handleSelect={this.handleSelect}
-          handleChange={this.handleChange}
+          onSelect={this.handleSelect}
+          onChange={this.handleChange}
           swap={this.state.swap}
           value={this.state.inputFrom}
-          storedLocation={{name: this.state.inputFrom, id: this.state.fromId}}  
+          storedlocation={{name: this.state.inputFrom, id: this.state.fromId}}  
         />
         {this.state.errors.fromId && <Error type="from"/>}
 
         <SemanticSearch 
           identifier="destination"
-          handleSelect={this.handleSelect}
+          onSelect={this.handleSelect}
+          onChange={this.handleChange}          
           swap={this.state.swap}
-          handleChange={this.handleChange}          
           value={this.state.inputTo}       
-          storedLocation={{name: this.state.inputTo, id: this.state.toId}}
+          storedlocation={{name: this.state.inputTo, id: this.state.toId}}
         />    
         {this.state.errors.toId && <Error type="to"/>}
         {this.state.errors.sameDest && <Error type="same"/>}
@@ -147,28 +139,14 @@ class App extends React.Component<{}, State> {
         inputTo: value.fullName
       })
     }
-    
   }
 
   private setLocalStorage() {
-    localStorage.setItem('from', this.state.inputFrom);
-    localStorage.setItem('to', this.state.inputTo);
-    localStorage.setItem('fromId', this.state.fromId);
-    localStorage.setItem('toId', this.state.toId);
-  }
-
-  private handleInputFrom = (value: string, id: string) => {
-    this.setState({
-      inputFrom: value,
-      fromId: id,
-    });
-  }
-
-  private handleInputTo = (value: string, id: string) => {
-    this.setState({
-      inputTo: value,
-      toId: id,
-    });
+    const { inputFrom, inputTo, fromId, toId } = this.state;
+    localStorage.setItem('from', inputFrom);
+    localStorage.setItem('to', inputTo);
+    localStorage.setItem('fromId', fromId);
+    localStorage.setItem('toId', toId);
   }
 
   private resetInputId = (identifier: string, value) =>  {

@@ -1,8 +1,5 @@
 import * as React from 'react';
-
-interface Props {
-  handleSwap: () => void;
-}
+import { SwapCircleProps as Props } from '../../InterfaceCollection';
 
 class SwapCircle extends React.Component<Props, any> {
   constructor(props: Props) {
@@ -11,23 +8,19 @@ class SwapCircle extends React.Component<Props, any> {
       spin: false,
     };
   }
+
   handleSwap = () => {
     this.setState({ spin: true });
-    setTimeout(() => { this.setState({ spin: false }); }, 700);
     this.props.handleSwap();
+    setTimeout(() => { this.setState({ spin: false }); }, 700);
   }
 
   render() {
-    let classProps;
-    this.state.spin ?
-      classProps = 'swap-spin' :
-      classProps = 'swap';
-
     return (
       <div className="swapDiv" >
         <img
           onClick={this.handleSwap}
-          className={classProps}
+          className={this.state.spin ? 'swap-spin' : 'swap'}
           id="swapImg"
           src="images/swap.png"
         />

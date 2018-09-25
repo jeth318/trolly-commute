@@ -51,8 +51,8 @@ export interface PrettyLegsRaw {
 }
 
 export interface StopLocation {
-  id: String,
-  name: String,
+  id: string,
+  name: string,
   lat: Number,
   lon: Number,
   weight: Number
@@ -82,17 +82,17 @@ export interface TripRowMoreProps {
   legs: LegRow;
 }
 
-export interface SearchFormProps {
-  visibleFlash: boolean;
-  handleInputFrom: (value: string, id: string) => void;
-  handleInputTo: (value: string, id: string) => void;
-  handleSubmit: () => void;
+export interface SwapCircleProps {
   handleSwap: () => void;
-  errors: {
-    fromId: boolean;
-    toId: boolean;
-    sameDest: boolean;
-  };
+}
+
+export interface SemanticSearchProps {
+  identifier: string,  
+  onSelect: (value, identifier) => void;
+  onChange: (value, identifier) => void;
+  swap: Boolean,
+  value: string,
+  storedlocation: { name: string, id: string }
 }
 
 export interface ErrorProps {

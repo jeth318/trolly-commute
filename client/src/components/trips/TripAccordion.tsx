@@ -8,7 +8,7 @@ import {
 
 import TripRow from './TripRow';
 import TripRowMore from './TripRowMore';
-import { TripTableProps as Props, LegRow } from '../../InterfaceCollection';
+import { LegRow } from '../../InterfaceCollection';
 
 class TripAccordion extends React.Component<any, any>{
   
@@ -27,7 +27,6 @@ class TripAccordion extends React.Component<any, any>{
         </div>
           <Accordion accordion={true}>
             {this.props.legCollection.map((legs: LegRow, i: number) => {
-              
               return ([
                 <AccordionItem key={i}>
                   <AccordionItemTitle>

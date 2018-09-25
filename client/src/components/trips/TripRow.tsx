@@ -18,24 +18,22 @@ class TripRow extends React.Component<Props, {}> {
   }
 
   private CheckDelays = (legObj: Leg) => {
+
+    if (!legObj.Origin.rtTime || legObj.Origin.time === legObj.Origin.rtTime) return '';
+
     if (legObj.cancelled) {
       return <span style={{ color: 'red' }}> INSTÄLLD</span>;
     }
-    if (legObj.Origin.rtTime != null) {
+
       let a = moment(legObj.Origin.date + 'T' + legObj.Origin.time);
       let b = moment(legObj.Origin.date + 'T' + legObj.Origin.rtTime);
       let minDiff = b.diff(a, 'minutes');
 
       if (minDiff > 0) {
         return <span style={{ color: 'red' }}>+{minDiff}</span>;
-      } else if (minDiff < 0) {
-        return <span style={{ color: 'green' }}>{minDiff}</span>;
       } else {
-        return;
-      }
-    } else {
-      return;
-    }
+        return <span style={{ color: 'green' }}>{minDiff}</span>;
+      } 
   }
 
   private CheckAccessibility = (legObj: Leg[]) => {
@@ -58,7 +56,6 @@ class TripRow extends React.Component<Props, {}> {
     let ttHours = b.diff(a, 'hours');
 
     if (ttMin >= 60) {
-
       return ttHours + 'h, ' + (ttMin - (ttHours * 60)) + ' min';
     } else {
       return ttMin + ' min';
