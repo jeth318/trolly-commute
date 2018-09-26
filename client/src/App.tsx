@@ -196,7 +196,7 @@ class App extends React.Component<{}, State> {
     if (fromId !== '' && toId !== '' && fromId !== toId) {
       this.preventSpam();      
       api.GetTrips(this.state.fromId, this.state.toId)
-        .then((res: LegCollection) =>  {
+        .then((res: any) =>  {
           this.setState({
             legCollection: res,
             loading: false,
