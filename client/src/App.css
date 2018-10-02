@@ -193,6 +193,7 @@ th.arrival{
   padding: 20px;
   background-color: grey;
   color: white;
+  background-image: url("/images/stone.jpg")
 }
 
 .accordion-header{
@@ -234,30 +235,8 @@ th.arrival{
 
 /** ACCORDION **/
 
-/**
-* ----------------------------------------------
-* Demo styles
-* ----------------------------------------------
-**/
-.u-position-absolute {
-  position: absolute;
-}
-
-.u-position-relative {
-  position: relative;
-}
-
-.accordion {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-}
-
 .accordion__item + .accordion__item {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.accordion__item--has-icon {
-  position: relative;
 }
 
 .accordion__title {
@@ -275,147 +254,27 @@ th.arrival{
 }
 
 .accordion__body {
+  position: relative;
   display: block;
-  /*animation: fadein 0.35s ease-in;*/
+  z-index: -1;
 }
+
+.accordion__body--open {
+  max-height: 600px;
+  overflow: auto;
+  -webkit-transition: max-height 250ms ease-in; /* Safari */
+  transition: max-height 250ms ease-in;
+} 
 
 .accordion__body--hidden {
-  display: none;
-  opacity: 0;
-  /*animation: fadein 0.15s ease-in;*/
-}
-
-.accordion__title > *:last-child,
-.accordion__body > *:last-child {
-  margin-bottom: 0;
-  transition: height 400ms easi-in;
-}
-
-.accordion__arrow {
-  display: inline-block;
-  position: relative;
-  width: 24px;
-  height: 12px;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  margin-top: -6px;
-}
-
-.accordion__arrow::after,
-.accordion__arrow::before {
-  display: block;
-  position: absolute;
-  top: 50%;
-  width: 10px;
-  height: 2px;
-  background-color: currentColor;
-  content: '';
-}
-
-.accordion__arrow::before {
-  left: 4px;
-  transform: rotate(45deg);
-}
-
-[aria-expanded='true'] .accordion__arrow::before {
-  transform: rotate(-45deg);
-}
-
-.accordion__arrow::after {
-  right: 4px;
-  transform: rotate(-45deg);
-}
-
-[aria-expanded='true'] .accordion__arrow::after {
-  transform: rotate(45deg);
-}
-
-.accordion__arrow::before,
-.accordion__arrow::after {
-  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-}
-
-/* -------------------------------------------------- */
-/* ---------------- Animation part ------------------ */
-/* -------------------------------------------------- */
-
-@keyframes fadein {
-  0% {
-      opacity: 0;
-  }
-
-  100% {
-      opacity: 1;
-  }
-}
-@keyframes fadeout {
-  0% {
-      opacity: 1;
-  }
-
-  100% {
-      opacity: 0;
-  }
-}
-
-@keyframes move-down {
-  0% {
-      transform: translateY(0);
-  }
-  10% {
-      transform: translateY(0);
-  }
-  20% {
-      transform: translateY(5px);
-  }
-  30% {
-      transform: translateY(0);
-  }
-  100% {
-      transform: translateY(0);
-  }
-}
-
-@keyframes move-up {
-  0% {
-      transform: translateY(0);
-  }
-  10% {
-      transform: translateY(0);
-  }
-  20% {
-      transform: translateY(-5px);
-  }
-  30% {
-      transform: translateY(0);
-  }
-  100% {
-      transform: translateY(0);
-  }
-}
-
-.accordion__title--animated:hover .accordion__arrow {
-  animation-name: move-down;
-  animation-duration: 1.5s;
-}
-
-.accordion__title--animated[aria-expanded='true']:hover .accordion__arrow {
-  animation-name: move-up;
-  animation-duration: 1.5s;
+  max-height: 0px;
+  overflow: hidden;
+  -webkit-transition: max-height 250ms ease-in; /* Safari */
+  transition: max-height 250ms ease-in;
 }
 
 /*** ACCORDION END ***/
 
-@keyframes slideRowDown {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-
-@keyframes slideRowUp {
-  from { display: inline }
-  to { display: none }
-}
 .moreInfoTd {
   padding: 25px !important;
 }
@@ -473,6 +332,10 @@ input.error {
   font-size: 2em;
   background-color: grey;
   border-radius: 5px;
+}
+
+.svg-accesibility svg {
+  fill: black;
 }
 
 #visaResorBtn {
@@ -563,9 +426,6 @@ img.loading-img {
     -o-animation: fadein 0.5s; /* Opera < 12.1 */
        animation: fadein 0.5s;
 }
-
-/** PROBLEM END **/
-
 
 .heading-title {
   font-size: 40px;

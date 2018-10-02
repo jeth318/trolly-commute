@@ -39,7 +39,7 @@ class TripRowMore extends React.Component<Props, {}> {
     );
   }
 
-  private getWalk = () => <img src={__dirname + '../../../images/walk.png'} style={{ backgroundColor: 'white' }} className="legLogo-special" />;
+  private getWalk = () => <img src={__dirname + '../../../images/svg/walk.svg'} style={{ backgroundColor: 'white' }} className="legLogo-special" />;
 
   private getTrack = (track: any) => {
     if (!track) {

@@ -32,8 +32,6 @@
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
     "react": "^16.2.0",
-    "react-accessible-accordion": "^2.2.1",
-    "react-autosuggest": "^9.3.2",
     "react-bootstrap": "^0.31.3",
     "react-collapsible": "^2.0.4",
     "react-dev-utils": "^4.0.1",

@@ -40,7 +40,7 @@ class TripRow extends React.Component<Props, {}> {
     for (let i = 0; i < legObj.length; i++) {
       if (legObj[i].name !== 'GÅ') {
         if (legObj[i].accessibility === 'wheelChair') {
-          return <div><img src="/images/wheelChair.png" className="accessibility" /></div>;
+          return <div><img id="wheelchair" src="/images/svg/wheelchair.svg" className="accessibility" /></div>;
         } else {
           return null;
         }
@@ -68,19 +68,22 @@ class TripRow extends React.Component<Props, {}> {
         if (leg.type === 'WALK') {
           return null;
         } else if (leg.type === 'REG') {
-          let source = '../../../images/';
+          let source = '../../../images/svg/';
           switch (leg.name)  {
             case 'SJ Regional':
-              source += 'sj_logo.png';
+              source += 'sj_logo.svg';
               break;
             case 'NSB Regionaltåg':
-              source += 'nsb_logo.png';
+              source += 'nsb_logo.svg';
               break;
             case 'TÅGAB Regiontåg':
-              source += 'tagab_logo.jpg';
+              source += 'tagab_logo.svg';
+              break;
+            case 'Öresundståg':
+              source += 'oresundstag_logo.svg';
               break;
             default:
-              source += 'qmark.png';
+              source += 'qmark.svg';
               break;
           }
           return (
