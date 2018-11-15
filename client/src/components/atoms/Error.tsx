@@ -10,7 +10,7 @@ class Error extends React.Component<Props, {}> {
 
   render() {
     return (
-      <div className={`alert alert-danger `}>
+      <div className={`alert alert-danger`}>
         {this.message}
       </div>
     );

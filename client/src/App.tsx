@@ -16,7 +16,7 @@ interface State {
   inputTo: string;
   fromId: string;
   toId: string;
-  legCollection: LegCollection |  null;
+  legCollection: LegCollection | null;
   loading: boolean;
   visibleFlash: boolean;
   submitCount: any;
@@ -25,6 +25,7 @@ interface State {
     fromId: boolean;
     toId: boolean;
     sameDest: boolean;
+    other: Boolean,
   },
   swap: boolean;
   isSwapped: boolean;
@@ -47,6 +48,7 @@ class App extends React.Component<{}, State> {
         fromId: false,
         toId: false,
         sameDest: false,
+        other: false
       },
       swap: false,
       isSwapped: false
@@ -73,47 +75,62 @@ class App extends React.Component<{}, State> {
           fromId: false,
           toId: false,
           sameDest: false,
+          other: false
         },
       });
     }
   }
 
-  render() {
+  private renderSearch() {
     return (
-      <div className="app-wrapper">
-      <div className="ui stackable">
       <div className="ui column">
         <Header />
-        <SemanticSearch 
-          identifier="origin"     
+        <SemanticSearch
+          identifier="origin"
           onSelect={this.handleSelect}
           onChange={this.handleChange}
           swap={this.state.swap}
           value={this.state.inputFrom}
-          storedlocation={{name: this.state.inputFrom, id: this.state.fromId}}  
+          storedlocation={{ name: this.state.inputFrom, id: this.state.fromId }}
         />
-        {this.state.errors.fromId && <Error type="from"/>}
+        {this.state.errors.fromId && <Error type="from" />}
 
-        <SemanticSearch 
+        <SemanticSearch
           identifier="destination"
           onSelect={this.handleSelect}
-          onChange={this.handleChange}          
+          onChange={this.handleChange}
           swap={this.state.swap}
-          value={this.state.inputTo}       
-          storedlocation={{name: this.state.inputTo, id: this.state.toId}}
-        />    
-        {this.state.errors.toId && <Error type="to"/>}
-        {this.state.errors.sameDest && <Error type="same"/>}
-           
+          value={this.state.inputTo}
+          storedlocation={{ name: this.state.inputTo, id: this.state.toId }}
+        />
+        {this.state.errors.toId && <Error type="to" />}
+        {this.state.errors.sameDest && <Error type="same" />}
+
         <SwapCircle handleSwap={this.handleSwap} />
-        <SearchButton handleSubmit={this.handleSubmit}/>
-        </div>
-        <div className="ui column">
+        <SearchButton handleSubmit={this.handleSubmit} />
+      </div>
+    );
+  }
+
+  renderTripTable() {
+    return (
+      <div className="ui column">
         {this.state.loading && <Loading />}
         {this.state.legCollection && !this.state.loading &&
-           <TripAccordion legCollection={this.state.legCollection} />}
-           </div>
+          <TripAccordion legCollection={this.state.legCollection} />}
       </div>
+    );
+  };
+
+  render() {
+    return (
+      <div className="app-wrapper">
+        <div className="ui stackable">
+          {this.renderSearch()}
+          <div className="ui column">
+            {!this.state.errors.other ? this.renderTripTable() : <Error type="other" />}
+          </div>
+        </div>
       </div>
     );
   }
@@ -125,6 +142,12 @@ class App extends React.Component<{}, State> {
     } else {
       this.resetInputId(identifier, value)
     }
+  }
+
+  private setError = (error) => {
+    console.error(error);
+
+    this.setState({loading: false, errors: { ...this.state.errors, other: true } });
   }
 
   private handleSelect = (value, identifier) => {
@@ -149,7 +172,7 @@ class App extends React.Component<{}, State> {
     localStorage.setItem('toId', toId);
   }
 
-  private resetInputId = (identifier: string, value) =>  {
+  private resetInputId = (identifier: string, value) => {
     if (identifier === "origin") {
       this.setState({
         inputFrom: value,
@@ -157,7 +180,8 @@ class App extends React.Component<{}, State> {
         errors: {
           fromId: false,
           toId: false,
-          sameDest: false
+          sameDest: false,
+          other: this.state.errors.other
         }
       });
     } else {
@@ -167,7 +191,8 @@ class App extends React.Component<{}, State> {
         errors: {
           fromId: false,
           toId: false,
-          sameDest: false
+          sameDest: false,
+          other: this.state.errors.other
         }
       });
     }
@@ -175,18 +200,20 @@ class App extends React.Component<{}, State> {
 
   private preventSpam() {
     this.setState({
-      loading: true, 
-      recentSubmit: true, 
-      submitCount: this.state.submitCount + 1}
+      loading: true,
+      recentSubmit: true,
+      submitCount: this.state.submitCount + 1,
+      errors: {...this.state.errors, other: false }
+    }
     );
-    setTimeout(() => { this.setState({ recentSubmit: false, submitCount: 0 });}, 7000);
+    setTimeout(() => { this.setState({ recentSubmit: false, submitCount: 0 }); }, 7000);
     if (this.state.submitCount === 2 && this.state.recentSubmit) {
-      this.setState({visibleFlash: true});
-      setTimeout(() => {this.setState({ visibleFlash: false });}, 7000);
+      this.setState({ visibleFlash: true });
+      setTimeout(() => { this.setState({ visibleFlash: false }); }, 7000);
     }
   }
 
-  private handleSubmit = () =>  {
+  private handleSubmit = () => {
     let fromIdError = false;
     let toIdError = false;
     let sameDestError = false;
@@ -194,21 +221,23 @@ class App extends React.Component<{}, State> {
     let toId = this.state.toId;
 
     if (fromId !== '' && toId !== '' && fromId !== toId) {
-      this.preventSpam();      
+      this.preventSpam();
       api.GetTrips(this.state.fromId, this.state.toId)
-        .then((res: any) =>  {
+        .then((res: any) => {
           this.setState({
             legCollection: res,
             loading: false,
+            errors: {...this.state.errors, other: false }
           });
-        });
+        })
+        .catch((error) => this.setError(error));
       this.setLocalStorage();
 
     } else {
       if (fromId === '' && toId !== '') {
         fromIdError = true;
         toIdError = false;
-      } else if (toId === '' && fromId !== '')  {
+      } else if (toId === '' && fromId !== '') {
         toIdError = true;
         fromIdError = false;
       } else if (fromId === '' && toId === '') {
@@ -217,7 +246,7 @@ class App extends React.Component<{}, State> {
       } else if (fromId === toId) {
         sameDestError = true;
       }
-      this.setState({ errors: { fromId: fromIdError, toId: toIdError, sameDest: sameDestError }});
+      this.setState({ errors: { fromId: fromIdError, toId: toIdError, sameDest: sameDestError, other: this.state.errors.other } });
     }
   }
 
@@ -238,7 +267,8 @@ class App extends React.Component<{}, State> {
       errors: {
         fromId: errorToId,
         toId: errorFromId,
-        sameDest: sameDest
+        sameDest: sameDest,
+        other: this.state.errors.other
       },
       swap: true,
       isSwapped: !this.state.isSwapped

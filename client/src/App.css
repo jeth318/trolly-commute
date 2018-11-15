@@ -60,7 +60,24 @@ body {
 
 .alert-danger {
   margin-top: 0;
+  color: white;
   padding: 5px 5px 5px 10px;
+  background-color: crimson;
+  margin-right: 30px;
+  margin-left: 30px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.alert-info {
+  margin-top: 0;
+  color: white;
+  padding: 5px 5px 5px 10px;
+  background-color: rgb(74, 74, 255);
+  margin-right: 30px;
+  margin-left: 30px;
+  border-radius: 5px;
+  text-align: center;
 }
 .main-row {
   margin: 0;
@@ -153,20 +170,18 @@ img.accessibility {
   margin-right: 4px;
   border-radius: 5px;
   box-shadow: 1px 1px 1px #888888;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 .legLogo-special {
   line-height: 30px;
   width: 30px;
   height: 30px;
-  text-align: center;
   margin-right: 4px;
-  float: left;
   border-radius: 5px;
   box-shadow: 1px 1px 1px #888888;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 6px;
+  margin-bottom: 4px;
 }
 
 .legLogo-special-sub {
@@ -259,18 +274,14 @@ th.arrival{
   z-index: -1;
 }
 
-.accordion__body--open {
-  max-height: 600px;
+
+ .accordion__body--open {
   overflow: auto;
-  -webkit-transition: max-height 250ms ease-in; /* Safari */
-  transition: max-height 250ms ease-in;
-} 
+  display: block;
+}
 
 .accordion__body--hidden {
-  max-height: 0px;
-  overflow: hidden;
-  -webkit-transition: max-height 250ms ease-in; /* Safari */
-  transition: max-height 250ms ease-in;
+  display: none;
 }
 
 /*** ACCORDION END ***/

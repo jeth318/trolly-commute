@@ -23,7 +23,6 @@ export default class API {
     const data = await response.json();
     let legs: LegsRaw[] = data.TripList.Trip;
     let legsCleaned = _.map(legs, (trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
-    
     return legsCleaned;
   };
 

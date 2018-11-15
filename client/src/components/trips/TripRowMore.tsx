@@ -17,10 +17,7 @@ class TripRowMore extends React.Component<Props, {}> {
           <span className="track"> {this.getTrack(leg.Origin.track)}</span>
           <span className="time">  @ {leg.Origin.time}</span>
           <br />
-
           {leg.type === 'WALK' ? this.getWalk() : this.getLegSubColors(leg)}
-          <br />
-          <br />
           {i === lastLeg &&
             <span>{this.trimName(leg.Destination.name)}</span>}
           {i === lastLeg &&
@@ -35,11 +32,10 @@ class TripRowMore extends React.Component<Props, {}> {
       <div className='moreInfoRow'>
           {this.renderMoreInfo()}
       </div>
-      
     );
   }
 
-  private getWalk = () => <img src={__dirname + '../../../images/svg/walk.svg'} style={{ backgroundColor: 'white' }} className="legLogo-special" />;
+  private getWalk = () => <div><img src={__dirname + '../../../images/svg/walk.svg'} style={{ backgroundColor: 'white' }} className="legLogo-special" /></div>;
 
   private getTrack = (track: any) => {
     if (!track) {
