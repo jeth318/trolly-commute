@@ -61,6 +61,7 @@ class SemanticSearch extends React.Component<Props, any> {
             results: response.stopLocations,
           })
         })
+        .catch((error) => console.error(error));
     }
   }
   

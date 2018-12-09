@@ -7,7 +7,7 @@ class TripAccordion extends React.Component<any, any>{
   constructor() {
     super({});
     this.state = {
-      selectedRow: null
+      selectedRows: []
     }
   }
   
@@ -25,9 +25,21 @@ class TripAccordion extends React.Component<any, any>{
     )
   }
   
-  handleSelect = index => this.setState({ selectedRow: this.state.selectedRow !== index ? index : null});
+  handleSelect = rowIndex => {
 
-  getStatus = index => this.state.selectedRow === index ? 'accordion__body--open' : 'accordion__body--hidden';
+    const index = this.state.selectedRows.indexOf(rowIndex);
+    let selectedRows = []; 
+    if (index > -1) {
+      console.log('removing', index);
+      
+      selectedRows = this.state.selectedRows.filter((row => row !== rowIndex));
+    } else {
+      selectedRows = this.state.selectedRows.concat([rowIndex])
+    }
+    this.setState({ selectedRows });
+  }
+
+  getStatus = index => this.state.selectedRows.includes(index) ? 'accordion__body--open' : 'accordion__body--hidden';
 
   renderAccordion = () => {
     return (
@@ -52,21 +64,3 @@ class TripAccordion extends React.Component<any, any>{
   }
 }
 export default TripAccordion;
-
-
-/*
-<Accordion accordion={true}>
-  {this.props.legCollection.map((legs: LegRow, i: number) => {
-    return ([
-      <AccordionItem key={i}>
-        <AccordionItemTitle>
-          {this.renderTripRow(i, legs)}
-        </AccordionItemTitle>
-        <AccordionItemBody>
-          {this.renderTripRowMore(i, legs)}
-        </AccordionItemBody>
-      </AccordionItem>
-    ]);
-  })}
-</Accordion>
-*/
