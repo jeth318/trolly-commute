@@ -1,7 +1,8 @@
 body {
-  background-image: url("/images/wallpaper_rails_min.jpg");
+  background-image: url("/images/winter_rails-min.jpeg");
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
@@ -276,12 +277,16 @@ th.arrival{
 
 
  .accordion__body--open {
-  overflow: auto;
-  display: block;
+  max-height: 600px;
+  transition: max-height 0.2s ease-in;
 }
 
 .accordion__body--hidden {
-  display: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+
+  
 }
 
 /*** ACCORDION END ***/
@@ -543,7 +548,7 @@ table tbody {
 @media screen and (max-width: 470px) {
   body {
     height: 100%;
-    background-image: url("/images/wallpaper_rails_min.jpg");
+    background-image: url("/images/winter_rails-min.jpeg");
   }
   .heading-title {
     display: 40px;

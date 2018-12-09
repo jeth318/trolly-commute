@@ -48,8 +48,7 @@ GetTripFromSearch = (fromId, toId) => {
   }
 
   return new Promise((resolve, reject) => {
-    request(options,
-      (err, res) => {
+    request(options, (err, res) => {
         if (err) {
           return reject(err);
         }
