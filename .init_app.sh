@@ -16,5 +16,6 @@ if [ -d "$build" ]; then
 fi
 npm run build
 git stash clear
+cd ..
 pm2 restart index.js --watch
 echo "DONE!"
