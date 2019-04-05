@@ -21,7 +21,7 @@ export default class API {
       return stopLocation;
     });
     return { stopLocations: stopArraySemantic, searchId: data.searchId };
-  };
+  }
   
   async GetTrips(fromId: string, toId: string) {
     const response = await FetchRequest('/api/trips', RequestMethod.POST, { origin: fromId, destination: toId }, true);
@@ -29,9 +29,9 @@ export default class API {
     let legs: LegsRaw[] = data.TripList.Trip;
     let legsCleaned = _.map(legs, (trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
     return legsCleaned;
-  };
+  }
 
-  private sortByWeight(stopLocations) {
+  private sortByWeight(stopLocations: any) {
     return _.sortBy(stopLocations, ['weight']).reverse();
-  };
-};
+  }
+}

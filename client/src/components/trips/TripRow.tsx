@@ -8,28 +8,38 @@ class TripRow extends React.Component<Props, {}> {
     const leg = this.props.legs.Leg;
     return (
       <div className="ui grid" >
-        <div className={"four wide column"} style={{alignSelf: 'center'}}> {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}</div>
-        <div className={"five wide column"} style={{alignSelf: 'center'}}>{this.GetLegColors(leg)}</div>
-        <div className={"three wide column"} style={{alignSelf: 'center'}}>{this.GetLegTravelTime(leg)}</div>
-        <div className={"three wide column"} style={{alignSelf: 'center'}}>{leg[leg.length - 1].Destination.time}</div>
-        <div className="one wide column accessibility" style={{alignSelf: 'center'}} >{this.CheckAccessibility(leg)}</div>
+        <div className={'four wide column'} style={{alignSelf: 'center'}}> 
+          {this.props.legs.Leg[0].Origin.time} {this.CheckDelays(leg[0])}
+        </div>
+        <div className={'five wide column'} style={{alignSelf: 'center'}}>
+          {this.GetLegColors(leg)}
+        </div>
+        <div className={'three wide column'} style={{alignSelf: 'center'}}>
+          {this.GetLegTravelTime(leg)}
+        </div>
+        <div className={'three wide column'} style={{alignSelf: 'center'}}>
+          {leg[leg.length - 1].Destination.time}
+        </div>
+        <div className="one wide column accessibility" style={{alignSelf: 'center'}}>
+          {this.CheckAccessibility(leg)}
+        </div>
       </div>
     );
   }
 
   private CheckDelays = (legObj: Leg) => {
 
-    if (!legObj.Origin.rtTime || legObj.Origin.time === legObj.Origin.rtTime) return '';
+    if (!legObj.Origin.rtTime || legObj.Origin.time === legObj.Origin.rtTime) { return ''; }
 
     if (legObj.cancelled) {
       return <span style={{ color: 'red' }}> INSTÄLLD</span>;
     }
 
-      let a = moment(legObj.Origin.date + 'T' + legObj.Origin.time);
-      let b = moment(legObj.Origin.date + 'T' + legObj.Origin.rtTime);
-      let minDiff = b.diff(a, 'minutes');
+    let a = moment(legObj.Origin.date + 'T' + legObj.Origin.time);
+    let b = moment(legObj.Origin.date + 'T' + legObj.Origin.rtTime);
+    let minDiff = b.diff(a, 'minutes');
 
-      if (minDiff > 0) {
+    if (minDiff > 0) {
         return <span style={{ color: 'red' }}>+{minDiff}</span>;
       } else {
         return <span style={{ color: 'green' }}>{minDiff}</span>;

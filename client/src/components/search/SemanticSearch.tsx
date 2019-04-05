@@ -1,6 +1,6 @@
 // import * as _ from 'lodash';
 import * as React from 'react';
-import { Search, Grid } from 'semantic-ui-react'
+import { Search, Grid } from 'semantic-ui-react';
 import API from '../../api/APIService';
 import classNames from 'classnames';
 import { SemanticSearchProps as Props } from '../../InterfaceCollection';
@@ -20,69 +20,17 @@ class SemanticSearch extends React.Component<Props, any> {
   }
 
   componentDidMount() {
-    this.resetComponent()
+    this.resetComponent();
     if (this.props.storedlocation) {
       this.setState({
         value: this.props.storedlocation.name.split(',')[0]
-      },this.doSearch)
+      },            this.doSearch);
     }
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     // If swap is true, set state with value from prop and trigger new search to update the results.
-    this.props.swap && this.setState({value: this.props.value}, this.doSearch)
-  }
-
-  private formGroupFromClasses = () => {
-    const { identifier, swap } = this.props;
-    return classNames({
-    'slideUp': identifier === 'origin' && swap,
-    'slideDown': identifier === 'destination' && swap
-  })};
-
-  private resetComponent = () => this.setState({
-    isLoading: false,
-    results: [],
-    value: '',
-    searchId: '',
-  })
-
-  private handleResultSelect = (e, { result }) => {
-    this.setState({ value: result.title })
-    this.props.onSelect(result, this.props.identifier)
-  }
-
-  private doSearch = () => {
-    if (this.state.value.length > 2) {
-      api.GetStopLocations(this.state.value)
-        .then((response: any) => {
-          this.setState({
-            isLoading: false,
-            results: response.stopLocations,
-          })
-        })
-        .catch((error) => console.error(error));
-    }
-  }
-  
-  private handleSearchChange = (e, { value }) => {
-    const self = this;
-    this.props.onChange(value, this.props.identifier)
-    self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut)
-
-    self.setState({
-      value: value,
-      typeingTimeOut: setTimeout(() => {
-        this.doSearch();
-      }, 300)
-    })
-  }
-
-  private onFocus = (event: any, data: any) => {
-    const inputField = event.target
-    setTimeout(function(x){
-      inputField.setSelectionRange(0,inputField.value.length);
-    }, 0, inputField);
+    this.props.swap && this.setState({value: this.props.value}, this.doSearch);
   }
 
   render() {
@@ -106,7 +54,59 @@ class SemanticSearch extends React.Component<Props, any> {
         </Grid.Column>
       </Grid>
       </div>
-    )
+    );
+  }
+
+  private formGroupFromClasses = () => {
+    const { identifier, swap } = this.props;
+    return classNames({
+    'slideUp': identifier === 'origin' && swap,
+    'slideDown': identifier === 'destination' && swap
+  });}
+
+  private resetComponent = () => this.setState({
+    isLoading: false,
+    results: [],
+    value: '',
+    searchId: '',
+  })
+
+  private handleResultSelect = (e, { result }) => {
+    this.setState({ value: result.title });
+    this.props.onSelect(result, this.props.identifier);
+  }
+
+  private doSearch = () => {
+    if (this.state.value.length > 2) {
+      api.GetStopLocations(this.state.value)
+        .then((response: any) => {
+          this.setState({
+            isLoading: false,
+            results: response.stopLocations,
+          });
+        })
+        .catch((error) => console.error(error));
+    }
+  }
+  
+  private handleSearchChange = (e, { value }) => {
+    const self = this;
+    this.props.onChange(value, this.props.identifier);
+    self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut);
+
+    self.setState({
+      value: value,
+      typeingTimeOut: setTimeout(() => {
+        this.doSearch();
+      },                         300)
+    });
+  }
+
+  private onFocus = (event: any, data: any) => {
+    const inputField = event.target;
+    setTimeout(function() {
+      inputField.setSelectionRange(0,inputField.value.length);
+    },         0, inputField);
   }
 }
 export default SemanticSearch;

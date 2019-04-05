@@ -6,7 +6,7 @@ class Error extends React.Component<Props, {}> {
 
   private get message() {
     return errorMessages.filter(message => this.props.type === message.type)[0].message;
-  };
+  }
 
   render() {
     return (
@@ -14,6 +14,6 @@ class Error extends React.Component<Props, {}> {
         {this.message}
       </div>
     );
-  };
+  }
 }
 export default Error;

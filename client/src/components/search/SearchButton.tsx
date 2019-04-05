@@ -6,11 +6,11 @@ class SearchButton extends React.Component<Props, {}> {
   render() {
     return (
       <div className="search-button-wrapper">
-        <Button 
-        className="search-button"
-        size="large"
-        color="green"
-        onClick={this.props.handleSubmit}
+        <Button
+          className="search-button"
+          size="large"
+          color="green"
+          onClick={this.props.handleSubmit}
         >
           Sök resor
         </Button>

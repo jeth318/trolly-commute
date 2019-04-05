@@ -51,11 +51,11 @@ export interface PrettyLegsRaw {
 }
 
 export interface StopLocation {
-  id: string,
-  name: string,
-  lat: Number,
-  lon: Number,
-  weight: Number
+  id: string;
+  name: string;
+  lat: Number;
+  lon: Number;
+  weight: Number;
 }
 
 export interface LegsRaw {
@@ -87,12 +87,12 @@ export interface SwapCircleProps {
 }
 
 export interface SemanticSearchProps {
-  identifier: string,  
+  identifier: string;  
   onSelect: (value, identifier) => void;
   onChange: (value, identifier) => void;
-  swap: Boolean,
-  value: string,
-  storedlocation: { name: string, id: string }
+  swap: Boolean;
+  value: string;
+  storedlocation: { name: string, id: string };
 }
 
 export interface ErrorProps {

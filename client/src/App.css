@@ -1,5 +1,5 @@
 body {
-  background-image: url("/images/winter_rails-min.jpeg");
+  background-image: url("/images/wallpaper_rails_min.jpg");
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
   background-position: center;
@@ -548,7 +548,7 @@ table tbody {
 @media screen and (max-width: 470px) {
   body {
     height: 100%;
-    background-image: url("/images/winter_rails-min.jpeg");
+    background-image: url("/images/wallpaper_rails_min.jpg");
   }
   .heading-title {
     display: 40px;

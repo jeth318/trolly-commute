@@ -26,12 +26,13 @@ interface State {
     toId: boolean;
     sameDest: boolean;
     other: Boolean,
-  },
+  };
   swap: boolean;
   isSwapped: boolean;
 }
 
 class App extends React.Component<{}, State> {
+
   constructor(state: State) {
     super(state);
     this.state = {
@@ -81,6 +82,28 @@ class App extends React.Component<{}, State> {
     }
   }
 
+  renderTripTable() {
+    return (
+      <div className="ui column">
+        {this.state.loading && <Loading />}
+        {this.state.legCollection && !this.state.loading &&
+          <TripAccordion legCollection={this.state.legCollection} />}
+      </div>
+    );
+  }
+  render() {
+    return (
+      <div className="app-wrapper">
+        <div className="ui stackable">
+          {this.renderSearch()}
+          <div className="ui column">
+            {!this.state.errors.other ? this.renderTripTable() : <Error type="other" />}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   private renderSearch() {
     return (
       <div className="ui column">
@@ -112,35 +135,11 @@ class App extends React.Component<{}, State> {
     );
   }
 
-  renderTripTable() {
-    return (
-      <div className="ui column">
-        {this.state.loading && <Loading />}
-        {this.state.legCollection && !this.state.loading &&
-          <TripAccordion legCollection={this.state.legCollection} />}
-      </div>
-    );
-  };
-
-  render() {
-    return (
-      <div className="app-wrapper">
-        <div className="ui stackable">
-          {this.renderSearch()}
-          <div className="ui column">
-            {!this.state.errors.other ? this.renderTripTable() : <Error type="other" />}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-
   private handleChange = (value, identifier) => {
     if (identifier === 'origin') {
-      this.resetInputId(identifier, value)
+      this.resetInputId(identifier, value);
     } else {
-      this.resetInputId(identifier, value)
+      this.resetInputId(identifier, value);
     }
   }
 
@@ -155,12 +154,12 @@ class App extends React.Component<{}, State> {
       this.setState({
         fromId: value.id,
         inputFrom: value.fullName
-      })
+      });
     } else {
       this.setState({
         toId: value.id,
         inputTo: value.fullName
-      })
+      });
     }
   }
 
@@ -173,7 +172,7 @@ class App extends React.Component<{}, State> {
   }
 
   private resetInputId = (identifier: string, value) => {
-    if (identifier === "origin") {
+    if (identifier === 'origin') {
       this.setState({
         inputFrom: value,
         fromId: '',
@@ -246,7 +245,14 @@ class App extends React.Component<{}, State> {
       } else if (fromId === toId) {
         sameDestError = true;
       }
-      this.setState({ errors: { fromId: fromIdError, toId: toIdError, sameDest: sameDestError, other: this.state.errors.other } });
+      this.setState({ 
+        errors: { 
+          fromId: fromIdError, 
+          toId: toIdError, 
+          sameDest: sameDestError, 
+          other: this.state.errors.other 
+        }
+      });
     }
   }
 
@@ -277,8 +283,8 @@ class App extends React.Component<{}, State> {
     setTimeout(() => {
       this.setState(({
         swap: false,
-      }))
-    }, 600);
+      }));
+    },         600);
   }
 }
 export default App;

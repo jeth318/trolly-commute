@@ -10,6 +10,6 @@ export const FetchRequest = (url, method, payload, headers?) => {
         method: RequestMethod[method],
         body: JSON.stringify({...payload}),
         headers: headers ? { 'content-type': 'application/json; charset=utf-8' } : []
-      }
-      return fetch(url, options);
-}
+      };
+    return fetch(url, options);
+};

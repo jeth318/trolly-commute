@@ -1,6 +1,6 @@
 import { getDistance } from 'geolib';
 
- export const getUserCoordinates = () => {
+export const getUserCoordinates = () => {
   var options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -15,7 +15,7 @@ import { getDistance } from 'geolib';
       
       latitude: crd.latitude,
       longitude: crd.longitude
-    }
+    };
   }
   
   function error(err) {
@@ -24,8 +24,4 @@ import { getDistance } from 'geolib';
   }
   
   return navigator.geolocation.getCurrentPosition(success, error, options);
- }
-
-
-
-
+ };
