@@ -1,6 +1,10 @@
 import * as _ from 'lodash';
 import { LegsRaw } from '../InterfaceCollection';
 import { FetchRequest, RequestMethod } from '../utils/request-builder';
+import { getUserCoordinates } from '../utils/geolocation-util';
+import { getDistance } from 'geolib';
+const userLocation = navigator.geolocation.getCurrentPosition((data)=>data, (error=>error), {enableHighAccuracy: true});
+console.log(userLocation);
 
 export default class API {
 
@@ -13,6 +17,7 @@ export default class API {
       stopLocation.key = stopLocation._id;
       stopLocation.title = stopLocation.name;
       stopLocation.description = stopLocation.city;
+      stopLocation.price = '90';
       return stopLocation;
     });
     return { stopLocations: stopArraySemantic, searchId: data.searchId };

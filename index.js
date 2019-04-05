@@ -9,7 +9,7 @@ var api = require('./services/API');
 var mongoose = require('mongoose');
 /* MLAB */
 /* 'mongodb://root:root@ds141068.mlab.com:41068/trollycommute'  */  
-mongoose.connect('mongodb://localhost/trollycommute')
+mongoose.connect('mongodb://root:root@ds141068.mlab.com:41068/trollycommute')
 .then(() => console.log('Esablished connection to mLab...'))
 .catch((err) => res.send(err))
 
