@@ -9,6 +9,7 @@
     "@types/mongoose": "^5.0.5",
     "@types/react-autosuggest": "^8.0.2",
     "@types/request": "^2.0.6",
+    "audit": "0.0.6",
     "autoprefixer": "7.1.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
