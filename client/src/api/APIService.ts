@@ -17,7 +17,6 @@ export default class API {
       stopLocation.key = stopLocation._id;
       stopLocation.title = stopLocation.name;
       stopLocation.description = stopLocation.city;
-      stopLocation.price = '90';
       return stopLocation;
     });
     return { stopLocations: stopArraySemantic, searchId: data.searchId };
