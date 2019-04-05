@@ -8,7 +8,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node --prefix client/scripts/build.js",
     "start": "npm install && node index.js",
     "postinstall": "cd client && npm install && npm run build"
   },
