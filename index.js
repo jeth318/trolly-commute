@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var StopLocation = require('./db/mongoose/StopLocationModel');
 var api = require('./services/API');
-var http = require("http");
+var https = require("https");
 
 var mongoose = require('mongoose');
 /* MLAB */
@@ -66,5 +66,5 @@ app.get('/api/update/stoplocations', function(req, res){
 })
 
 setInterval(function() {
-    http.get("https://trolly-commute.herokuapp.com/");
+	https.get("https://trolly-commute.herokuapp.com/");
 }, 300000); // every 5 minutes (300000)
