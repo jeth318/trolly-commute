@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var StopLocation = require('./db/mongoose/StopLocationModel');
 var api = require('./services/API');
+var http = require("http");
 
 var mongoose = require('mongoose');
 /* MLAB */
@@ -63,3 +64,7 @@ app.get('/api/update/stoplocations', function(req, res){
 	.then(() => console.log('Done'))
 	.catch((err) => res.send({error: 'Failed inserting', stack: err}))
 })
+
+setInterval(function() {
+    http.get("https://trolly-commute.herokuapp.com/");
+}, 300000); // every 5 minutes (300000)
