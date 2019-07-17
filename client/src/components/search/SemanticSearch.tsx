@@ -72,7 +72,7 @@ class SemanticSearch extends React.Component<Props, any> {
   })
 
   private handleResultSelect = (e, { result }) => {
-    this.setState({ value: result.title });
+    this.setState({ value: result.title, price: result.distance });
     this.props.onSelect(result, this.props.identifier);
   }
 

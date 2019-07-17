@@ -1,10 +1,30 @@
 import * as _ from 'lodash';
 import { LegsRaw } from '../InterfaceCollection';
 import { FetchRequest, RequestMethod } from '../utils/request-builder';
-import { getUserCoordinates } from '../utils/geolocation-util';
 import { getDistance } from 'geolib';
-const userLocation = navigator.geolocation.getCurrentPosition((data)=>data, (error=>error), {enableHighAccuracy: true});
-console.log(userLocation);
+
+const getPosition = (options?) => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+  });
+}
+
+let userPosition = {
+  latitute: 0,
+  longitude: 0
+};
+
+getPosition()
+  .then((position: any) => {
+    console.log(position);
+      userPosition.latitute = position.coords.latitude;
+      userPosition.longitude = position.coords.longitude;
+  })
+  .catch((err) => {
+    console.error(err.message);
+  });
+
+
 
 export default class API {
 
@@ -17,6 +37,18 @@ export default class API {
       stopLocation.key = stopLocation._id;
       stopLocation.title = stopLocation.name;
       stopLocation.description = stopLocation.city;
+
+      const distance = getDistance(
+        { latitude: stopLocation.lat, longitude: stopLocation.lon},
+        { latitude: userPosition.latitute, longitude: userPosition.longitude }
+      );
+
+      if (distance < 300) {
+        stopLocation.price =  distance + ' m' + ' 📍'
+      } else {
+        stopLocation.price = Math.round(distance/1000 * 10 ) / 10  + ' km' + ' 📍';
+      }
+
       return stopLocation;
     });
     return { stopLocations: stopArraySemantic, searchId: data.searchId };
