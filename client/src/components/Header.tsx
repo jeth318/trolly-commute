@@ -14,7 +14,6 @@ class Header extends React.Component {
               timezone={'Europe/Stockholm'} 
           />
         </div>
-        <h2 id="subheader">Västtrafik Trip Planning</h2>
       </div>
     );
   }

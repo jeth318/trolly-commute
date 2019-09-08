@@ -18,9 +18,8 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "lodash": "^4.17.11",
-    "mongoose": "^5.0.8",
     "path": "0.12.7",
-    "request": "^2.83.0",
+    "request-promise-native": "^1.0.7",
     "semantic-ui-react": "^0.78.3"
   }
 }

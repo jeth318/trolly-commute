@@ -67,25 +67,26 @@ class SemanticSearch extends React.Component<Props, any> {
   private resetComponent = () => this.setState({
     isLoading: false,
     results: [],
-    value: '',
-    searchId: '',
+    value: ''
   })
 
   private handleResultSelect = (e, { result }) => {
-    this.setState({ value: result.title, price: result.distance });
+    console.log(result);
+    this.setState({ value: result.name, price: result.distance });
     this.props.onSelect(result, this.props.identifier);
   }
 
-  private doSearch = () => {
+  private doSearch = async () => {
     if (this.state.value.length > 2) {
-      api.GetStopLocations(this.state.value)
-        .then((response: any) => {
-          this.setState({
-            isLoading: false,
-            results: response.stopLocations,
-          });
-        })
-        .catch((error) => console.error(error));
+      try {
+        const response = await api.getStopLocations(this.state.value)
+        this.setState({
+          isLoading: false,
+          results: response.stopLocations
+        });
+      } catch (error) {
+        return console.error(error);
+      }
     }
   }
   
@@ -95,7 +96,7 @@ class SemanticSearch extends React.Component<Props, any> {
     self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut);
 
     self.setState({
-      value: value,
+      value,
       typeingTimeOut: setTimeout(() => {
         this.doSearch();
       },                         300)

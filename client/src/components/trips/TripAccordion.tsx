@@ -16,22 +16,19 @@ class TripAccordion extends React.Component<any, any> {
   renderTableHeader = () => {
     return (
       <div className="ui grid accordion-header">
-      <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}} >Avgång</div>
-      <div className="four wide column accordion-header-child" style={{alignSelf: 'center'}}>Linje</div>
-      <div className="two wide column accordion-header-child" style={{alignSelf: 'center'}}>Restid</div>
-      <div className="two wide column accordion-header-child" style={{alignSelf: 'center'}}>Ankomst</div>
-      <div className="one wide column accordion-header-child" style={{alignSelf: 'center'}} />
+        <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}} >Avgång</div>
+        <div className="four wide column accordion-header-child" style={{alignSelf: 'center'}}>Linje</div>
+        <div className="two wide column accordion-header-child" style={{alignSelf: 'center'}}>Restid</div>
+        <div className="two wide column accordion-header-child" style={{alignSelf: 'center'}}>Ankomst</div>
+        <div className="one wide column accordion-header-child" style={{alignSelf: 'center'}} />
     </div>
     );
   }
   
   handleSelect = rowIndex => {
-
     const index = this.state.selectedRows.indexOf(rowIndex);
     let selectedRows = []; 
     if (index > -1) {
-      console.log('removing', index);
-      
       selectedRows = this.state.selectedRows.filter((row => row !== rowIndex));
     } else {
       selectedRows = this.state.selectedRows.concat([rowIndex]);

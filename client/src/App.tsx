@@ -32,7 +32,6 @@ interface State {
 }
 
 class App extends React.Component<{}, State> {
-
   constructor(state: State) {
     super(state);
     this.state = {
@@ -143,22 +142,16 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  private setError = (error) => {
-    console.error(error);
-
-    this.setState({loading: false, errors: { ...this.state.errors, other: true } });
-  }
-
   private handleSelect = (value, identifier) => {
     if (identifier === 'origin') {
       this.setState({
         fromId: value.id,
-        inputFrom: value.fullName
+        inputFrom: value.name
       });
     } else {
       this.setState({
         toId: value.id,
-        inputTo: value.fullName
+        inputTo: value.name
       });
     }
   }
@@ -212,48 +205,58 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  private handleSubmit = () => {
+  private handleSubmit = async () => {
+    if (this.isInputValid) {
+      this.preventSpam();
+      try {
+        const response: any = await api.getTrips(this.state.fromId, this.state.toId);
+        this.setState({
+          legCollection: response,
+          loading: false,
+          errors: {...this.state.errors, other: false }
+        });
+        this.setLocalStorage();
+      } catch (error) {
+        console.error('Could not get trips:', error)
+        this.setState({loading: false, errors: { ...this.state.errors, other: true } });
+      }
+    } else {
+      this.setValidationError();
+    }
+  }
+
+  private get isInputValid() {
+    const { fromId, toId } = this.state;
+    return fromId !== '' && toId !== '' && fromId !== toId;
+  }
+
+  private setValidationError() {
     let fromIdError = false;
     let toIdError = false;
     let sameDestError = false;
-    let fromId = this.state.fromId;
-    let toId = this.state.toId;
+    const { fromId, toId } = this.state;
 
-    if (fromId !== '' && toId !== '' && fromId !== toId) {
-      this.preventSpam();
-      api.GetTrips(this.state.fromId, this.state.toId)
-        .then((res: any) => {
-          this.setState({
-            legCollection: res,
-            loading: false,
-            errors: {...this.state.errors, other: false }
-          });
-        })
-        .catch((error) => this.setError(error));
-      this.setLocalStorage();
-
-    } else {
-      if (fromId === '' && toId !== '') {
-        fromIdError = true;
-        toIdError = false;
-      } else if (toId === '' && fromId !== '') {
-        toIdError = true;
-        fromIdError = false;
-      } else if (fromId === '' && toId === '') {
-        fromIdError = true;
-        toIdError = true;
-      } else if (fromId === toId) {
-        sameDestError = true;
-      }
-      this.setState({ 
-        errors: { 
-          fromId: fromIdError, 
-          toId: toIdError, 
-          sameDest: sameDestError, 
-          other: this.state.errors.other 
-        }
-      });
+    if (fromId === '' && toId !== '') {
+      fromIdError = true;
+      toIdError = false;
+    } else if (toId === '' && fromId !== '') {
+      toIdError = true;
+      fromIdError = false;
+    } else if (fromId === '' && toId === '') {
+      fromIdError = true;
+      toIdError = true;
+    } else if (fromId === toId) {
+      sameDestError = true;
     }
+    this.setState({ 
+      errors: { 
+        fromId: fromIdError, 
+        toId: toIdError, 
+        sameDest: sameDestError, 
+        other: this.state.errors.other 
+      }
+    });
+
   }
 
   private handleSwap = () => {
