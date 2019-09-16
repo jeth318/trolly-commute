@@ -73,7 +73,6 @@ export interface TripTableProps {
 export interface TripRowProps {
   key: number;
   id: number;
-  onClick: (id: number) => void;
   visible: boolean | null;
   legs: LegRow;
 }

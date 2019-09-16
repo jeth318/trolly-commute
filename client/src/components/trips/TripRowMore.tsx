@@ -7,10 +7,12 @@ class TripRowMore extends React.Component<Props, {}> {
   
   renderMoreInfo = () => {
     const lastLeg = this.props.legs.Leg.length - 1;
-    return this.props.legs.Leg.map((leg: Leg, i: number) => {
+    const { Leg } = this.props.legs;
+
+    return Leg.map((leg: Leg, i: number) => {
       return (
         <div key={i} className={leg.type === 'WALK' ? 'legPieceWalk' : 'legPiece'}>
-          <div className={i===0? 'stopBlobFirst' : 'stopBlob'} />
+          <div className={i === 0? 'stopBlobFirst' : 'stopBlob'} />
           <div className={i === lastLeg? 'stopBlobFinal': ''} />
 
           <span>{this.trimName(leg.Origin.name)}</span>
@@ -18,10 +20,9 @@ class TripRowMore extends React.Component<Props, {}> {
           <span className="time">  @ {leg.Origin.time}</span>
           <br />
           {leg.type === 'WALK' ? this.getWalk() : this.getLegSubColors(leg)}
-          {i === lastLeg &&
-            <span>{this.trimName(leg.Destination.name)}</span>}
-          {i === lastLeg &&
-            <span className="time"> @ {leg.Destination.time}</span>}
+          <br />
+          {i === lastLeg && <span>{this.trimName(leg.Destination.name)}</span>}
+          {i === lastLeg && <span className="time"> @ {leg.Destination.time}</span>}
         </div>
       );
     });
@@ -29,11 +30,14 @@ class TripRowMore extends React.Component<Props, {}> {
 
   render() {
     return (
-      <div className="moreInfoRow">
+      <React.Fragment>
           {this.renderMoreInfo()}
-      </div>
+      </React.Fragment>
+
     );
   }
+
+  private sayHey = () => { console.log('hey'); }
 
   private getWalk = () => {
     return (
@@ -62,8 +66,10 @@ class TripRowMore extends React.Component<Props, {}> {
     } else {
       return (
         <div
+          id={leg.id}
           className="legLogo-sub"
           style={{ backgroundColor: leg.fgColor, color: leg.bgColor }}
+          onClick={() => console.log('SLDKSLd')}
         >
           {leg.name}
         </div>
