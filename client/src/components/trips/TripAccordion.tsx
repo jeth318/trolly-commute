@@ -35,7 +35,7 @@ class TripAccordion extends React.Component<any, any> {
       <React.Fragment>
       {this.tableHeader}
       <div className="accordion">
-        {this.props.legCollection.forEach((legs: LegRow, i: number) => {
+        {this.props.legCollection.map((legs: LegRow, i: number) => {
         return ([
           <div className="accordion__item" key={i}>
             <div className="accordion__title" onClick={() => this.handleSelect(i)}>{this.renderTripRow(i, legs)}</div>
