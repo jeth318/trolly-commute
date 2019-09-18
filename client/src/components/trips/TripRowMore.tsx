@@ -30,15 +30,9 @@ class TripRowMore extends React.Component<Props, {}> {
 
   render() {
     return (
-      <React.Fragment>
-          {this.renderMoreInfo()}
-      </React.Fragment>
-
+        <div className="moreInfoRow">{this.renderMoreInfo()}</div>
     );
   }
-
-  private sayHey = () => { console.log('hey'); }
-
   private getWalk = () => {
     return (
     <div>
@@ -69,7 +63,6 @@ class TripRowMore extends React.Component<Props, {}> {
           id={leg.id}
           className="legLogo-sub"
           style={{ backgroundColor: leg.fgColor, color: leg.bgColor }}
-          onClick={() => console.log('SLDKSLd')}
         >
           {leg.name}
         </div>
