@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { TripRowMoreProps as Props, Leg } from '../../InterfaceCollection';
+import { TripRowMoreProps as Props } from '../../InterfaceCollection';
+import { Leg as LegInterface} from '../../InterfaceCollection';
 
 class TripRowMore extends React.Component<Props, {}> {
  
@@ -9,7 +10,7 @@ class TripRowMore extends React.Component<Props, {}> {
     const lastLeg = this.props.legs.Leg.length - 1;
     const { Leg } = this.props.legs;
 
-    return Leg.map((leg: Leg, i: number) => {
+    return Leg.map((leg: LegInterface, i: number) => {
       return (
         <div key={i} className={leg.type === 'WALK' ? 'legPieceWalk' : 'legPiece'}>
           <div className={i === 0? 'stopBlobFirst' : 'stopBlob'} />
@@ -30,15 +31,9 @@ class TripRowMore extends React.Component<Props, {}> {
 
   render() {
     return (
-      <React.Fragment>
-          {this.renderMoreInfo()}
-      </React.Fragment>
-
+        <div className="moreInfoRow">{this.renderMoreInfo()}</div>
     );
   }
-
-  private sayHey = () => { console.log('hey'); }
-
   private getWalk = () => {
     return (
     <div>
@@ -60,7 +55,7 @@ class TripRowMore extends React.Component<Props, {}> {
     }
   }
 
-  private getLegSubColors = (leg: Leg) => {
+  private getLegSubColors = (leg: LegInterface) => {
     if (leg.type === 'WALK') {
       return;
     } else {
@@ -69,7 +64,6 @@ class TripRowMore extends React.Component<Props, {}> {
           id={leg.id}
           className="legLogo-sub"
           style={{ backgroundColor: leg.fgColor, color: leg.bgColor }}
-          onClick={() => console.log('SLDKSLd')}
         >
           {leg.name}
         </div>

@@ -19,7 +19,3 @@ app.get('/', function(req, res) {
 	res.set('Content-Type', 'text/html')
 	.sendFile(path.join(__dirname, '/client/build/index.html'))
 });
-
-setInterval(function() {
-	https.get("https://trolly-commute.herokuapp.com/");
-}, 300000); // every 5 minutes (300000)

@@ -9,10 +9,7 @@ export const getUserCoordinates = () => {
   
   function success(pos) {
     var crd = pos.coords;
-    console.log('klu');
-  
     return {
-      
       latitude: crd.latitude,
       longitude: crd.longitude
     };

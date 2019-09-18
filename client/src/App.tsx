@@ -217,7 +217,7 @@ class App extends React.Component<{}, State> {
         });
         this.setLocalStorage();
       } catch (error) {
-        console.error('Could not get trips:', error)
+        console.error('Could not get trips:', error);
         this.setState({loading: false, errors: { ...this.state.errors, other: true } });
       }
     } else {

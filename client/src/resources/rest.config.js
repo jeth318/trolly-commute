@@ -7,4 +7,3 @@ export const allStopsUrl = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.a
 export const locationBaseUrl = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=';
 export const vastTrafikUser = process.env.REACT_APP_VASTTRAFIK_KEY;
 export const vastTrafikSecret = process.env.REACT_APP_VASTTRAFIK_SECRET;
-//console.log(process.env);

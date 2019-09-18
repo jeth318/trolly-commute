@@ -11,7 +11,7 @@ class TripAccordion extends React.Component<any, any> {
     };
   }
   
-  renderTripRow = (i: number, legs: LegRow) => <TripRow key={i} id={i} legs={legs} visible />;
+  renderTripRow = (i: number, legs: LegRow) => <TripRow key={i} id={i} legs={legs} visible={true} />;
   renderTripRowMore = (i: number, legs: LegRow) => <TripRowMore key={i + 1 * 100} visible={true} legs={legs} />;
   private get tableHeader() {
     return (

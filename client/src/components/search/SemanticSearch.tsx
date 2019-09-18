@@ -71,7 +71,6 @@ class SemanticSearch extends React.Component<Props, any> {
   })
 
   private handleResultSelect = (e, { result }) => {
-    console.log(result);
     this.setState({ value: result.name, price: result.distance });
     this.props.onSelect(result, this.props.identifier);
   }
@@ -79,7 +78,7 @@ class SemanticSearch extends React.Component<Props, any> {
   private doSearch = async () => {
     if (this.state.value.length > 2) {
       try {
-        const response = await api.getStopLocations(this.state.value)
+        const response = await api.getStopLocations(this.state.value);
         this.setState({
           isLoading: false,
           results: response.stopLocations
