@@ -7,7 +7,6 @@ const childProcess = require('child_process');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 const ora = require('ora');
-const spinner = ora('Deploying application. This might take a few minutes...');
 dotenv.config();
 
 // Middleware
@@ -39,8 +38,8 @@ app.post("/webhooks", function (req, res) {
 function deploy(res){
 	res.sendStatus(200);
 	console.log('OK response sent to GitHub');
-	spinner.start();
-	childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
+	console.log('Deploying application. This might take a few minutes...');
+	return childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
 			console.log('WE HAVE ERR');
 			console.error(err);
