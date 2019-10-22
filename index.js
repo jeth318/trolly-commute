@@ -41,12 +41,13 @@ function deploy(res){
 		if (err) {
 			console.error(err);
 			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
-			return res.send(500);
+			return res.sendStatus(500);
 		} else {
+			console.log(stdout);
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
 		}
 	});
-	res.send(200);
+	res.sendStatus(200);
 }
 
 var transporter = nodemailer.createTransport({
