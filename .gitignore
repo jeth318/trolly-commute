@@ -3,3 +3,5 @@
 .DS_STORE
 client/build/*
 .env
+.npm-debug-log*
+.idea*

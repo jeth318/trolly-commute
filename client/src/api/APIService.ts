@@ -3,26 +3,17 @@ import { LegsRaw } from '../InterfaceCollection';
 import { getDistance } from 'geolib';
 import { locationBaseUrl, tokenUrl, vastTrafikSecret, vastTrafikUser, tripBaseUrl } from '../resources/rest.config';
 
-const getPosition = (options?) => {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject, options);
-  });
-}
-
 let userPosition = {
   latitute: 0,
   longitude: 0
 };
 
-getPosition()
-  .then((position: any) => {
+const updateUserPosition: PositionCallback = (position: Position) => {
+  userPosition.latitute = position.coords.latitude;
+  userPosition.longitude = position.coords.longitude;
+}
 
-      userPosition.latitute = position.coords.latitude;
-      userPosition.longitude = position.coords.longitude;
-  })
-  .catch((err) => {
-    console.error(err.message);
-  });
+navigator.geolocation.getCurrentPosition(updateUserPosition);
 
 export default class API {
   private accessToken = localStorage.getItem('access_token') || null;
@@ -68,7 +59,8 @@ export default class API {
           throw new Error(`Could not get a valid access token. Terminated after ${this.retryLimit} attempts`)
       }
       const data = await response.json();
-      const tripData: LegsRaw[] = data.TripList.Trip.map((trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
+      const { Trip } = data.TripList;
+      const tripData: LegsRaw[] = Trip.map((trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
       return tripData;
     } catch (error) {
       throw new Error(error);
