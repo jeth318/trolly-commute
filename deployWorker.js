@@ -1,5 +1,7 @@
 const childProcess = require('child_process');
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 console.log("Node Version: ", process.version);
 
