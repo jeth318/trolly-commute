@@ -85,5 +85,3 @@ const sendEmail = deploymentInfo => transporter.sendMail(mailOptions(deploymentI
 });
 
 // sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
-
-console.log('Deploying application. This might take a few minutes...');
