@@ -46,11 +46,10 @@ function deploy(res){
 		} else {
 			console.log(stdout);
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
-
+			console.log('OK response sent to GitHub');
+			return res.sendStatus(200);
 		}
 	});
-	console.log('OK response sent to GitHub');
-	res.sendStatus(200);
 }
 
 var transporter = nodemailer.createTransport({
