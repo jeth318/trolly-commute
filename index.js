@@ -35,26 +35,52 @@ app.post("/webhooks", function (req, res) {
 	}
 });
 
+
+console.log("Node Version: ", process.version);
+
+// This function will output the lines from the script
+// AS is runs, AND will return the full combined output
+// as well as exit code when it's done (using the callback).
+function run_script(command, args, callback) {
+	console.log("Starting Process.");
+	var child = childProcess.spawn(command, args);
+
+	var scriptOutput = "";
+
+	child.stdout.setEncoding('utf8');
+	child.stdout.on('data', function(data) {
+		console.log('stdout: ' + data);
+
+		data=data.toString();
+		scriptOutput+=data;
+	});
+
+	child.stderr.setEncoding('utf8');
+	child.stderr.on('data', function(data) {
+		console.log('stderr: ' + data);
+		sendEmail({ subject: 'Failed to deploy', text: data})
+		data=data.toString();
+		scriptOutput+=data;
+	});
+
+	child.on('close', function(code) {
+		callback(scriptOutput,code);
+	});
+
+	child.on('exit', function(code) {
+		callback(scriptOutput,code);
+	});
+}
+
+
 function deploy(res){
 	res.sendStatus(200);
 	console.log('OK response sent to GitHub');
 	console.log('Starting deployment. This might take a few minutes...');
-	return childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
-		if (err) {
-			console.log('WE HAVE ERR');
-			console.error(err);
-			spinner.stop();
-			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
-		} else if (stderr) {
-			console.log('WE HAVE STD-ERR');
-			spinner.stop();
-			console.error(stderr);
-		} else {
-			console.log('WE HAVE NO ERR');
-			console.log(stdout);
-			spinner.stop();
-			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
-		}
+	run_script('/home/pi/Apps/trolly-commute/deploy.sh', [], (scriptOut, code) => {
+		sendEmail({ subject: 'Deploy OK!', text: 'yey'});
+		console.log('SCRIPT_OUT__________', scriptOut);
+		console.log('CODE******************', code);
 	});
 }
 
