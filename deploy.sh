@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 cd /home/pi/Apps/trolly-commute
 
 echo "Stashing lock files"

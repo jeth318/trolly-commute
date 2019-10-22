@@ -6,7 +6,7 @@ class Header extends React.Component {
     return (
       <div className="heading">
         <br />
-        <h1 className="heading-title">Trolly-Commute</h1>
+        <h1 className="heading-title">Trolly Commute</h1>
         <div id="updatetime">
           <Clock
               format={'HH:mm:ss'}
