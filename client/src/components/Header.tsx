@@ -6,12 +6,12 @@ class Header extends React.Component {
     return (
       <div className="heading">
         <br />
-        <h1 className="heading-title">Trolly Commute</h1>
-        <div id="updatetime"> 
-          <Clock 
-              format={'HH:mm:ss'} 
-              ticking={true} 
-              timezone={'Europe/Stockholm'} 
+        <h1 className="heading-title">Trolly-Commute</h1>
+        <div id="updatetime">
+          <Clock
+              format={'HH:mm:ss'}
+              ticking={true}
+              timezone={'Europe/Stockholm'}
           />
         </div>
       </div>

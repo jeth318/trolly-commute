@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const port = 3001;;
 const https = require('https');
 const childProcess = require('child_process');
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
@@ -37,14 +40,38 @@ function deploy(res){
 	childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
 			console.error(err);
+			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
 			return res.send(500);
+		} else {
+			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
 		}
-		res.send(200);
 	});
+	res.send(200);
 }
-/*
-setInterval(function() {
-	https.get("https://trolly-commute.herokuapp.com/");
-}, 300000); // every 5 minutes (300000)
 
-*/
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: process.env.JTDEV_DEPLOYBOT_EMAIL,
+		pass: process.env.JTDEV_DEPLOYBOT_PASSWORD
+	}
+});
+
+var mailOptions = (deploymentInfo) => {
+		return {
+			from: process.env.JTDEV_DEPLOYBOT_EMAIL,
+			to: 'jesper.thornberg@me.com',
+			subject: deploymentInfo.subject,
+			text: deploymentInfo.text
+	}
+};
+
+const sendEmail = deploymentInfo => transporter.sendMail(mailOptions(deploymentInfo), function(error, info){
+	if (error) {
+		console.log(error);
+	} else {
+		console.log('Email sent: ' + info.response);
+	}
+});
+
+// sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
