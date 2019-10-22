@@ -41,9 +41,12 @@ function deploy(res){
 			console.error(err);
 			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
 			return res.sendStatus(500);
+		} else if (stderr) {
+			console.error(stderr);
 		} else {
 			console.log(stdout);
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
+
 		}
 	});
 	console.log('OK response sent to GitHub');
