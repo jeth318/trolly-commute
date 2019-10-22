@@ -33,7 +33,7 @@ app.post("/webhooks", function (req, res) {
 });
 
 function deploy(res){
-	childProcess.exec('cd /home/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
+	childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
 			console.error(err);
 			return res.send(500);
