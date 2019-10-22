@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 cd /home/Apps/trolly-commute
 
+echo "Stashing lock files"
+
+git stash
+
+echo "Dropping stash"
+
+git stash drop
+
 echo "Pulling from Master"
 
 git pull origin master
@@ -9,7 +17,9 @@ echo "Pulled successfully from master"
 
 echo "Rebuilding application"
 
-npm start
+cd client
+
+npm run build
 
 echo "Rebuild complete"
 
