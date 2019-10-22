@@ -38,7 +38,7 @@ app.post("/webhooks", function (req, res) {
 function deploy(res){
 	res.sendStatus(200);
 	console.log('OK response sent to GitHub');
-	console.log('Deploying application. This might take a few minutes...');
+	console.log('Starting deployment. This might take a few minutes...');
 	return childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
 			console.log('WE HAVE ERR');
