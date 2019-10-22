@@ -25,6 +25,7 @@ app.get('/', function(req, res) {
 app.post("/webhooks", function (req, res) {
 	var sender = req.body.sender;
 	var branch = req.body.ref;
+	var githubUsername = 'jeth318';
 
 	if(branch.indexOf('master') > -1 && sender.login === githubUsername){
 		deploy(res);
