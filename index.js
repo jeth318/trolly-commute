@@ -12,7 +12,6 @@ dotenv.config();
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
-console.log('Yo');
 
 app.set('port', port);
 app.use(express.static(__dirname + '/client/build'));
