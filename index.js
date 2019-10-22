@@ -1,9 +1,9 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var bodyParser = require('body-parser');
-var https = require('https');
+const express = require('express');
+const path = require('path');
+const app = express();
+const bodyParser = require('body-parser');
 const port = process.env.PORT || '5000';
+const https = require('https');
 
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
@@ -20,6 +20,9 @@ app.get('/', function(req, res) {
 	.sendFile(path.join(__dirname, '/client/build/index.html'))
 });
 
+/*
 setInterval(function() {
 	https.get("https://trolly-commute.herokuapp.com/");
 }, 300000); // every 5 minutes (300000)
+
+*/

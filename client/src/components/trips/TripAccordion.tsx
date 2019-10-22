@@ -7,13 +7,13 @@ class TripAccordion extends React.Component<any, any> {
   constructor() {
     super({});
     this.state = {
-      selectedRows: []
+      selectedRow: {}
     };
   }
   
-  renderTripRow = (i, legs) => <TripRow key={i} id={i} legs={legs} visible={true} onClick={() => { 'click'; }} />;
-  renderTripRowMore = (i, legs) => <TripRowMore key={i + 1 * 100} visible={true} legs={legs} />;
-  renderTableHeader = () => {
+  renderTripRow = (i: number, legs: LegRow) => <TripRow key={i} id={i} legs={legs} visible />;
+  renderTripRowMore = (i: number, legs: LegRow) => <TripRowMore key={i + 1 * 100} visible={true} legs={legs} />;
+  private get tableHeader() {
     return (
       <div className="ui grid accordion-header">
         <div className="three wide column accordion-header-child" style={{alignSelf: 'center'}} >Avgång</div>
@@ -25,29 +25,21 @@ class TripAccordion extends React.Component<any, any> {
     );
   }
   
-  handleSelect = rowIndex => {
-    const index = this.state.selectedRows.indexOf(rowIndex);
-    let selectedRows = []; 
-    if (index > -1) {
-      selectedRows = this.state.selectedRows.filter((row => row !== rowIndex));
-    } else {
-      selectedRows = this.state.selectedRows.concat([rowIndex]);
-    }
-    this.setState({ selectedRows });
+  handleSelect = (rowIndex) => {
+    this.setState({ selectedRow: this.state.selectedRow === rowIndex ? null : rowIndex });
   }
 
-  getStatus = index => this.state.selectedRows.includes(index) ? 'accordion__body--open' : 'accordion__body--hidden';
-
+  isRowOpen = index => this.state.selectedRow === index ? 'accordion__body--open' : 'accordion__body--hidden';
   renderAccordion = () => {
     return (
       <React.Fragment>
-      {this.renderTableHeader()}
+      {this.tableHeader}
       <div className="accordion">
         {this.props.legCollection.map((legs: LegRow, i: number) => {
         return ([
-          <div className="accordion__item" key={i} onClick={() => this.handleSelect(i)}>
-            <div className="accordion__title">{this.renderTripRow(i, legs)}</div>
-            <div className={`accordion__body ${this.getStatus(i)}`}>{this.renderTripRowMore(i, legs)}</div>
+          <div className="accordion__item" key={i}>
+            <div className="accordion__title" onClick={() => this.handleSelect(i)}>{this.renderTripRow(i, legs)}</div>
+            <div className={`accordion__body ${this.isRowOpen(i)}`}>{this.renderTripRowMore(i, legs)}</div>
           </div>
           ]); 
         })}
