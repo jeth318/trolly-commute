@@ -36,18 +36,18 @@ app.post("/webhooks", function (req, res) {
 });
 
 function deploy(res){
+	res.sendStatus(200);
+	console.log('OK response sent to GitHub');
+	console.log('Initiating deploy. This might take a few minutes...');
 	childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
 			console.error(err);
 			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
-			return res.sendStatus(500);
 		} else if (stderr) {
 			console.error(stderr);
 		} else {
 			console.log(stdout);
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
-			console.log('OK response sent to GitHub');
-			return res.sendStatus(200);
 		}
 	});
 }

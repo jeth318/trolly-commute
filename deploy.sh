@@ -26,3 +26,5 @@ echo "Restarting server..."
 pm2 restart trolly-commute
 
 echo "Server restarted Successfully"
+
+exit 0
