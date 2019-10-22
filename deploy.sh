@@ -17,9 +17,7 @@ echo "Pulled successfully from master"
 
 echo "Rebuilding application"
 
-cd client
-
-npm run build
+npm run deploy
 
 echo "Rebuild complete"
 
