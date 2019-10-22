@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || '5000';
 const https = require('https');
+const exec = require('child_process').exec;
 
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
@@ -20,6 +21,25 @@ app.get('/', function(req, res) {
 	.sendFile(path.join(__dirname, '/client/build/index.html'))
 });
 
+
+app.post("/webhooks", function (req, res) {
+	var sender = req.body.sender;
+	var branch = req.body.ref;
+
+	if(branch.indexOf('master') > -1 && sender.login === githubUsername){
+		deploy(res);
+	}
+});
+
+function deploy(res){
+	childProcess.exec('cd /home/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
+		if (err) {
+			console.error(err);
+			return res.send(500);
+		}
+		res.send(200);
+	});
+}
 /*
 setInterval(function() {
 	https.get("https://trolly-commute.herokuapp.com/");
