@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd /home/Apps/trolly-commute
+cd /home/pi/Apps/trolly-commute
 
 echo "Stashing lock files"
 
