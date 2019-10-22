@@ -5,8 +5,6 @@ const bodyParser = require('body-parser');
 const port = 3001;
 const runDeployment = require('./deployWorker');
 
-dotenv.config();
-
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
