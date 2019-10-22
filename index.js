@@ -3,10 +3,11 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const port = 3001;;
-const https = require('https');
 const childProcess = require('child_process');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+const ora = require('ora');
+const spinner = ora('Deploying application. This might take a few minutes...');
 dotenv.config();
 
 // Middleware
@@ -38,15 +39,21 @@ app.post("/webhooks", function (req, res) {
 function deploy(res){
 	res.sendStatus(200);
 	console.log('OK response sent to GitHub');
-	console.log('Initiating deploy. This might take a few minutes...');
+	spinner.start();
 	childProcess.exec('cd /home/pi/Apps/trolly-commute && ./deploy.sh', function(err, stdout, stderr){
 		if (err) {
+			console.log('WE HAVE ERR');
 			console.error(err);
+			spinner.stop();
 			sendEmail({ subject: 'Failed to deploy to jtdev.se', text: err} );
 		} else if (stderr) {
+			console.log('WE HAVE STD-ERR');
+			spinner.stop();
 			console.error(stderr);
 		} else {
+			console.log('WE HAVE NO ERR');
 			console.log(stdout);
+			spinner.stop();
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
 		}
 	});
@@ -78,3 +85,5 @@ const sendEmail = deploymentInfo => transporter.sendMail(mailOptions(deploymentI
 });
 
 // sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
+
+console.log('Deploying application. This might take a few minutes...');
