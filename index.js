@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3001;;
 const https = require('https');
-const exec = require('child_process').exec;
+const childProcess = require('child_process');
 
 // Middleware
 app.use(bodyParser.json({limit: '50mb'}));
