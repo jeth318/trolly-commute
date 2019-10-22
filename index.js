@@ -20,7 +20,6 @@ app.get('/', function(req, res) {
 
 // GitHub push webhook
 app.post("/webhooks", function (req, res) {
-	console.log(req.body);
 	const sender = req.body.sender;
 	const branch = req.body.ref;
 	const githubUsername = 'jeth318';
