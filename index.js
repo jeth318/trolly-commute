@@ -46,6 +46,7 @@ function deploy(res){
 			sendEmail({ subject: 'Successful deploy to jtdev.se!', text: 'Application deployed correctly'});
 		}
 	});
+	console.log('OK response sent to GitHub');
 	res.sendStatus(200);
 }
 
