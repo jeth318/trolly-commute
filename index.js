@@ -58,7 +58,6 @@ function run_script(command, args, callback) {
 	child.stderr.setEncoding('utf8');
 	child.stderr.on('data', function(data) {
 		console.log('stderr: ' + data);
-		sendEmail({ subject: 'Failed to deploy', text: data})
 		data=data.toString();
 		scriptOutput+=data;
 	});
@@ -78,9 +77,18 @@ function deploy(res){
 	console.log('OK response sent to GitHub');
 	console.log('Starting deployment. This might take a few minutes...');
 	run_script('/home/pi/Apps/trolly-commute/deploy.sh', [], (scriptOut, code) => {
-		sendEmail({ subject: 'Deploy OK!', text: 'yey'});
-		console.log('SCRIPT_OUT__________', scriptOut);
-		console.log('CODE******************', code);
+		if (code === 0) {
+			sendEmail({ subject: 'Deploy OK!', text: 'yey'});
+			childProcess.exec('pm2 restart trolly-commute', [], (err, stdErr, stdOut) => {
+				if (err) {
+					console.error('Restart failed:', err);
+				} else {
+					console.log('Restart OK');
+				}
+			})
+		} else {
+			sendEmail({ subject: 'Failed to deploy', text: data})
+		}
 	});
 }
 
