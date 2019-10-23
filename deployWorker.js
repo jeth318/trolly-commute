@@ -37,7 +37,7 @@ function deploy(){
     console.log('Starting deployment. This might take a few minutes...');
     run_script('/home/pi/Apps/trolly-commute/deploy.sh', [], (scriptOut, code) => {
         if (code === 0) {
-            return sendEmail({ subject: 'TrollyCommute was successfully deployed!', text: stdOut})
+            return sendEmail({ subject: 'TrollyCommute was successfully deployed!', text: scriptOut})
         } else {
             return sendEmail({ subject: 'Failed to deploy', text: data})
         }
