@@ -2,9 +2,7 @@ const childProcess = require('child_process');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
-
 console.log("Node Version: ", process.version);
-
 // This function will output the lines from the script
 // AS is runs, AND will return the full combined output
 // as well as exit code when it's done (using the callback).
@@ -39,7 +37,7 @@ function deploy(){
     console.log('Starting deployment. This might take a few minutes...');
     run_script('/home/pi/Apps/trolly-commute/deploy.sh', [], (scriptOut, code) => {
         if (code === 0) {
-            return sendEmail({ subject: 'TrollyCommute was successfully deployed!', text: ''})
+            return sendEmail({ subject: 'TrollyCommute was successfully deployed!', text: stdOut})
         } else {
             return sendEmail({ subject: 'Failed to deploy', text: data})
         }
@@ -49,14 +47,14 @@ function deploy(){
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.JTDEV_DEPLOYBOT_EMAIL,
-        pass: process.env.JTDEV_DEPLOYBOT_PASSWORD
+        user: 'deploy.jtdev@gmail.com',
+        pass: 'Deplotbot123'
     }
 });
 
 const mailOptions = (deploymentInfo) => {
     return {
-        from: process.env.JTDEV_DEPLOYBOT_EMAIL,
+        from: 'deploy.jtdev@gmail.com',
         to: 'jesper.thornberg@me.com',
         subject: deploymentInfo.subject,
         text: deploymentInfo.text
