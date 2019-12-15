@@ -32,19 +32,20 @@ class TripAccordion extends React.Component<any, any> {
   isRowOpen = index => this.state.selectedRow === index ? 'accordion__body--open' : 'accordion__body--hidden';
   renderAccordion = () => {
     return (
-      <React.Fragment>
+
+      <div className="trip-table-wrapper">
       {this.tableHeader}
       <div className="accordion">
         {this.props.legCollection.map((legs: LegRow, i: number) => {
-        return ([
-          <div className="accordion__item" key={i}>
+          return ([
+            <div className="accordion__item" key={i}>
             <div className="accordion__title" onClick={() => this.handleSelect(i)}>{this.renderTripRow(i, legs)}</div>
             <div className={`accordion__body ${this.isRowOpen(i)}`}>{this.renderTripRowMore(i, legs)}</div>
           </div>
           ]); 
         })}
       </div>
-      </React.Fragment>
+    </div>
     );
   }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import API from './api/APIService';
 import Header from './components/Header';
-import Loading from './components/atoms/Loading';
+import LoadingSpinner from './components/atoms/LoadingSpinner';
 import TripAccordion from './components/trips/TripAccordion';
 import SemanticSearch from './components/search/SemanticSearch';
 import { LegCollection } from './InterfaceCollection';
@@ -84,7 +84,7 @@ class App extends React.Component<{}, State> {
   renderTripTable() {
     return (
       <div className="ui column">
-        {this.state.loading && <Loading />}
+        {this.state.loading && <LoadingSpinner message="Hämtar resor..." />}
         {this.state.legCollection && !this.state.loading &&
           <TripAccordion legCollection={this.state.legCollection} />}
       </div>

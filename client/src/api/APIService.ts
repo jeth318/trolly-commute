@@ -1,9 +1,8 @@
 import axios from 'axios';
-import * as qs from 'querystring';
 import * as _ from 'lodash';
 import { LegsRaw, StopLocation } from '../InterfaceCollection';
 import { getDistance } from 'geolib';
-import { locationBaseUrl, tokenUrl, vastTrafikSecret, vastTrafikUser, tripBaseUrl } from '../resources/rest.config';
+import { locationBaseUrl, tokenUrl, tripBaseUrl } from '../resources/rest.config';
 
 const getPosition = (options?) => {
   return new Promise((resolve, reject) => {
@@ -46,7 +45,7 @@ export default class API {
       } else if (this.checkTokenStatus(err) === TERMINATE) {
           throw new Error(`Could not get a valid access token. Terminated after ${this.retryLimit} attempts`);
       }
-      return console.error(err);
+      return console.error('UNEXPECTED ERROR: ', err);
     }
   }
 
@@ -56,39 +55,42 @@ export default class API {
     const { RETRY, TERMINATE } = this.authActions;
     
     try {
-      const response = await axios(url, options);
-      if (this.checkTokenStatus(response) === RETRY) {
-        await this.fetchAccessToken();
-        this.tokenAttempt += 1;
-        return this.getTrips(fromId, toId);
-      } else if (this.checkTokenStatus(response) === TERMINATE) {
-          throw new Error(`Could not get a valid access token. Terminated after ${this.retryLimit} attempts`);
-      }
+      const response = await axios(url, options);      
       const data = await response.data;
       const tripData: LegsRaw[] = data.TripList.Trip
         .map((trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
       return tripData;
     } catch (error) {
-        throw new Error(error);
+      console.log('ERROR!!!', error);
+      
+      if (this.checkTokenStatus(error) === RETRY) {
+        await this.fetchAccessToken();
+        this.tokenAttempt += 1;
+        return this.getTrips(fromId, toId);
+      }
+      throw new Error(error.message);
     }
   }
 
   async fetchAccessToken() {
-    const params = {
-      'client_id': vastTrafikUser,
-      'client_secret': vastTrafikSecret,
-      'grant_type': 'client_credentials'
-    };
-    const headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'};
-    const config = { headers };
-    const response = await axios.post(tokenUrl, qs.stringify(params), config);
-    const data = await response.data;
-    this.accessToken = data.access_token;
-    localStorage.setItem('access_token', data.access_token);
+    try {
+      const response = await axios(tokenUrl);
+      const data = await response.data;
+      this.accessToken = data.access_token;
+      console.log('Acesstoken: ', this.accessToken);
+      localStorage.setItem('access_token', data.access_token);
+    } catch (error) {
+      console.log('ERROR WHILE FETCHING TOKEN', error)
+    }
+    
   }
 
   private checkTokenStatus(error: any) {
+    console.log(error);
+    
     const { RETRY, TERMINATE, PROCEED } = this.authActions;
+    console.log('ERROR.RESPONSE!', error.response);
+    
     if(error.response && error.response.status === 401) {
       return this.tokenAttempt < this.retryLimit ? RETRY : TERMINATE;
     } else {
