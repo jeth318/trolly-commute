@@ -22,19 +22,6 @@ const tokenConfig = {
     })
  };
 
- const locationConfig = {
-    url: locationBaseUrl,
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    data: qs.stringify({
-        'client_id': vastTrafikUser,
-        'client_secret': vastTrafikSecret,
-        'grant_type': 'client_credentials'
-    })
- };
-
 module.exports = { 
     tripBaseUrl,
     tokenUrl,

@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 	res.sendStatus(200);
 });
 
-const authRoute = async(req, res, next) => {
+const tokenHandler = async(req, res, next) => {
 	try {
 		const response = await axios(tokenConfig);
 		const data = response.data;
@@ -26,4 +26,4 @@ const authRoute = async(req, res, next) => {
 	}
 }
 
-app.get('/api/token', authRoute);
+app.get('/api/token', tokenHandler);
