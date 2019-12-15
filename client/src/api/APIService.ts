@@ -16,15 +16,12 @@ let userPosition = {
   longitude: 0
 };
 
-getPosition()
-  .then((position: any) => {
+const updateUserPosition: PositionCallback = (position: Position) => {
+  userPosition.latitute = position.coords.latitude;
+  userPosition.longitude = position.coords.longitude;
+}
 
-      userPosition.latitute = position.coords.latitude;
-      userPosition.longitude = position.coords.longitude;
-  })
-  .catch((err) => {
-    console.error(err.message);
-  });
+navigator.geolocation.getCurrentPosition(updateUserPosition);
 
 export default class API {
   private accessToken = localStorage.getItem('access_token') || null;
