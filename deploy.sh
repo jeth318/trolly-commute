@@ -10,13 +10,17 @@ echo "Pulling from Master"
 git pull origin master
 echo "Pulled successfully from master"
 
-echo "Installing root project dependencies"
+echo "Installing server dependencies"
+cd server
+rm -rf node_modules
 npm install
-echo "Root project dependencies installed"
+echo "Server dependencies installed"
 
-echo "Installing client project dependencies..."
-cd client && npm install
-echo "Client project dependencies was installed"
+echo "Installing client dependencies..."
+cd ../client
+rm -rf node_modules
+npm install
+echo "Client dependencies was installed"
 
 echo "Rebuilding application"
 npm run build
