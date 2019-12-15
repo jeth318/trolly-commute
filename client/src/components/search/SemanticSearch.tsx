@@ -3,7 +3,8 @@ import * as React from 'react';
 import { Search, Grid } from 'semantic-ui-react';
 import API from '../../api/APIService';
 import classNames from 'classnames';
-import { SemanticSearchProps as Props } from '../../InterfaceCollection';
+import { SemanticSearchProps as Props, StopLocation } from '../../InterfaceCollection';
+import { AxiosPromise } from 'axios';
 
 const api = new API();
 
@@ -78,7 +79,7 @@ class SemanticSearch extends React.Component<Props, any> {
   private doSearch = async () => {
     if (this.state.value.length > 2) {
       try {
-        const response = await api.getStopLocations(this.state.value);
+        const response: any = await api.getStopLocations(this.state.value);
         this.setState({
           isLoading: false,
           results: response.stopLocations

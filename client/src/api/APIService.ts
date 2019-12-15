@@ -1,8 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import * as _ from 'lodash';
 import { LegsRaw, StopLocation } from '../InterfaceCollection';
 import { getDistance } from 'geolib';
-import { locationBaseUrl, tokenUrl, tripBaseUrl } from '../resources/rest.config';
 
 const getPosition = (options?) => {
   return new Promise((resolve, reject) => {
@@ -23,80 +22,44 @@ const updateUserPosition: PositionCallback = (position: Position) => {
 navigator.geolocation.getCurrentPosition(updateUserPosition);
 
 export default class API {
-  private accessToken = localStorage.getItem('access_token') || null;
-  private tokenAttempt = 1;
-  private retryLimit = 3;
-  private authActions = { RETRY: 'retry', TERMINATE: 'terminate', PROCEED: 'proceed' };
+  async getStopLocations(query: String) {
+    const config: AxiosRequestConfig = {
+      url: '/api/stop-locations',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: { query }
+    }
 
-  async getStopLocations(search: String) {
-    const url = `${locationBaseUrl}${search}&format=json`;
-    const options = { headers: { 'Authorization': `Bearer ${this.accessToken}` } };
     try {
-      const response = await axios(url, options);
+      const response = await axios(config);
       const data = await response.data;
       const rawStopLocations = _.take(this.sortByIdx(data.LocationList.StopLocation), 15);
       return { stopLocations: this.formatStopLocations(rawStopLocations) };
     } catch (err) {
-      const { RETRY, TERMINATE } = this.authActions;
-      if (this.checkTokenStatus(err) === RETRY) {
-        await this.fetchAccessToken();
-        this.tokenAttempt += 1;
-        return await this.getStopLocations(search);
-      } else if (this.checkTokenStatus(err) === TERMINATE) {
-        throw new Error(`Could not get a valid access token. Terminated after ${this.retryLimit} attempts`);
-      }
-      return console.error(err);
+        return console.error(err);
     }
   }
 
   async getTrips(fromId: string, toId: string) {
-    const url = tripBaseUrl + fromId + '&destId=' + toId + '&numTrips=10&format=json';
-    let options = { headers: { Authorization: 'Bearer ' + this.accessToken } };
-    const { RETRY, TERMINATE } = this.authActions;
+    const config: AxiosRequestConfig = {
+      url: '/api/trips',
+      method: 'post',
+      data: { toId, fromId },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
     try {
-      const response = await axios(url, options);
-      const data = await response.data;
-      
-      if (data.TripList && data.TripList.error) {
-        return console.error(data.TripList)
-      }
-
-      const tripData: LegsRaw[] = data.TripList.Trip
-        .map((trip: LegsRaw) => Array.isArray(trip.Leg) ? trip : { Leg: [trip.Leg] });
-      return tripData;
-    } catch (error) {
-      if (this.checkTokenStatus(error) === RETRY) {
-        await this.fetchAccessToken();
-        this.tokenAttempt += 1;
-        return this.getTrips(fromId, toId);
-      } else if (this.checkTokenStatus(error) === TERMINATE) {
-        throw new Error(`Could not get a valid access token. Terminated after ${this.retryLimit} attempts`);
-      }
-      return console.error(error);
-    }
+      const response = await axios(config);
+      const data: LegsRaw[] = await response.data;
+      return data;
+    } catch (error) { 
+      return console.error(error)
   }
-
-  async fetchAccessToken() {
-    try {
-      const response = await axios(tokenUrl);
-      const data = await response.data;
-      this.accessToken = data.access_token;
-      localStorage.setItem('access_token', data.access_token);
-    } catch (error) {
-      return console.error(error);
-    }
-  }
-
-  private checkTokenStatus(error: any) {
-    const { RETRY, TERMINATE, PROCEED } = this.authActions;
-
-    if (error.response && error.response.status === 401) {
-      return this.tokenAttempt < this.retryLimit ? RETRY : TERMINATE;
-    } else {
-      return PROCEED;
-    }
-  }
+}
 
   private formatStopLocations(data: StopLocation[]) {
     return _.map(data, (stopLocation: any) => {
