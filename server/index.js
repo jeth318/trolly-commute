@@ -13,7 +13,7 @@ app.listen(app.get('port'), () => console.log('Running @ ' + app.get('port')));
 
 // Main route
 app.get('/', function (req, res) {
-	res.statusCode(200);
+	res.sendStatus(200);
 });
 
 const authRoute = async(req, res, next) => {
