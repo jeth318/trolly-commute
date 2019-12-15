@@ -50,13 +50,11 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "cypress:open": "cypress open"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
     "@types/react": "^16.0.9",
     "@types/react-dom": "^16.0.0",
-    "cypress": "^3.4.1",
     "dotenv": "^4.0.0"
   },
   "jest": {
