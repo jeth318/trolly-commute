@@ -18,7 +18,7 @@ let userPosition = {
 const updateUserPosition: PositionCallback = (position: Position) => {
   userPosition.latitute = position.coords.latitude;
   userPosition.longitude = position.coords.longitude;
-}
+};
 
 navigator.geolocation.getCurrentPosition(updateUserPosition);
 
@@ -80,7 +80,7 @@ export default class API {
       console.log('Acesstoken: ', this.accessToken);
       localStorage.setItem('access_token', data.access_token);
     } catch (error) {
-      console.log('ERROR WHILE FETCHING TOKEN', error)
+      console.log('ERROR WHILE FETCHING TOKEN', error);
     }
     
   }

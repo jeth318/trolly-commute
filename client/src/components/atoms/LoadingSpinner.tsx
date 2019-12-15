@@ -1,15 +1,15 @@
 import * as React from 'react';
 
 interface Props {
-    message?: String
-};
+    message?: String;
+}
 
 class LoadingSpinner extends React.Component<Props, {}> {
 
   render() {
     return (
       <div className={`loading-spinner-wrapper`}>
-        <div className="loader"></div>
+        <div className="loader" />
         <span className="loading-text">{this.props.message}</span>
       </div>
     );
