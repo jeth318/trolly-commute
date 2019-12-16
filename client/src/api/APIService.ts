@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import * as _ from 'lodash';
 import { LegsRaw, StopLocation } from '../InterfaceCollection';
 import { getDistance } from 'geolib';
+import { stopLocationsUrl, tripsUrl } from './rest.config';
 
 const getPosition = (options?) => {
   return new Promise((resolve, reject) => {
@@ -24,7 +25,7 @@ navigator.geolocation.getCurrentPosition(updateUserPosition);
 export default class API {
   async getStopLocations(query: String) {
     const config: AxiosRequestConfig = {
-      url: '/api/stop-locations',
+      url: stopLocationsUrl,
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -43,8 +44,10 @@ export default class API {
   }
 
   async getTrips(fromId: string, toId: string) {
+    console.log(tripsUrl);
+    
     const config: AxiosRequestConfig = {
-      url: '/api/trips',
+      url: tripsUrl,
       method: 'post',
       data: { toId, fromId },
       headers: {
