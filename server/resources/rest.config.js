@@ -22,6 +22,14 @@ const tokenConfig = {
     })
  };
 
+const getStoplocationConfig = encodedQuery => ({
+    url: `${locationBaseUrl}${encodedQuery}&format=json`
+});
+
+const getTripsConfig = (fromId, toId) => ({
+    url: `${tripBaseUrl}${fromId}&destId=${toId}&numTrips=10&format=json`,
+})
+
 module.exports = { 
     tripBaseUrl,
     tokenUrl,
@@ -29,5 +37,7 @@ module.exports = {
     locationBaseUrl,
     vastTrafikUser,
     vastTrafikSecret,
-    tokenConfig
+    tokenConfig,
+    getStoplocationConfig,
+    getTripsConfig
 };
