@@ -8,13 +8,13 @@ const axios = require('axios');
 
 const errorHandler = async ({ req, res, error, route }) => {
 	if (checkTokenStatus(error) === RETRY) {
-		delete axios.defaults.headers.common['Authorization'];
-		await fetchAccessToken();
-		tokenRetryAttempt += 1;
 		console.error(`Could not get a valid access token. Trying again. (attempt ${tokenRetryAttempt})`);
+		tokenRetryAttempt += 1;
+		await fetchAccessToken();
 		// Retry
 		return route(req, res);
 	} else if (checkTokenStatus(error) === TERMINATE) {
+		delete axios.defaults.headers.common['Authorization'];
 		const errorMessage = `Retry limit hit\nTerminated after ${retryLimit} attempts. Banning retries for 60 seconds.`;
 		console.error(errorMessage);
 		startTimeout();
@@ -33,7 +33,8 @@ const fetchAccessToken = async () => {
 	try {
 		const response = await axios(tokenConfig);
 		const accessToken = response.data.access_token;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+		tokenRetryAttempt = 0;
 		return console.log(`New token fetched: ${accessToken}`);
 	} catch (error) {
 		return console.error('Could not fetch token:', error.message);
