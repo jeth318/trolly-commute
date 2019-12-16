@@ -64,17 +64,18 @@ const errorHandler = async (req, res, error) => {
 
 const stopLocationsRoute = async (req, res) => {
 	const { query } = req.body;
-	const url = `${locationBaseUrl}${query}&format=json`;
-	const options = { headers: { 'Authorization': `Bearer ${accessToken}` } };
-
+	const config = {
+		url: `${locationBaseUrl}${query}&format=json`,
+		headers: { 'Authorization': `Bearer ${accessToken}` }
+	}
+		
 	try {
-		const response = await axios(url, options);
+		const response = await axios(config);
 		const data = response.data;
-		if (data.StopLocation && data.StopLocation.error) {
-			return errorHandler(req, res, data.StopLocation);
-		}
-		return res.json(response.data);
+
+		return res.json(data);
 	} catch (error) {
+		console.log(res.statusCode);
 		return errorHandler(req, res, error);
 	}
 }
@@ -83,7 +84,7 @@ const tripsRoute = async (req, res) => {
 	const { fromId, toId } = req.body;
 	const url = `${tripBaseUrl}${fromId}&destId=${toId}&numTrips=10&format=json`;
 	let options = { headers: { Authorization: `Bearer ${accessToken}` } };
-
+	
 	try {
 		const response = await axios(url, options);
 		const data = await response.data;
