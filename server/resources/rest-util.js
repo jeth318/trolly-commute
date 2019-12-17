@@ -28,7 +28,7 @@ const errorHandler = async ({ req, res, error, route }) => {
 const fetchAccessToken = async () => {
 	try {
 		const response = await axios(tokenConfig);
-		const accessToken = response.data.access_token+'23';
+		const accessToken = response.data.access_token;
 		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 		tokenRetryAttempt = 0;
 		return console.log(`New token fetched: ${accessToken}`);
