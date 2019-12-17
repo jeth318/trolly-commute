@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.17.2",
+  "pnpmVersion": "2.15.1",
+  "pnpmOptions": {},
+  "nodeSupportedVersionRange": ">=10.13.0 <11.0.0",
+  "gitPolicy": {},
+  "repository": {
+    "url": "https://github.com/jeth318/trolly-commute.git"
+  },
+  "eventHooks": {
+    "preRushInstall": [],
+    "postRushInstall": [],
+    "preRushBuild": [],
+    "postRushBuild": []
+  },
+   "projects": [
+    {
+      "packageName": "trolly-commute-client",
+      "projectFolder": "client"
+    },
+    {
+      "packageName": "trolly-commute-server",
+      "projectFolder": "server"
+    }
+  ]
+}

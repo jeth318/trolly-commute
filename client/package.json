@@ -1,5 +1,5 @@
 {
-  "name": "trolly-commute",
+  "name": "trolly-commute-client",
   "version": "2.1.0",
   "private": true,
   "proxy": "http://localhost:3001",
