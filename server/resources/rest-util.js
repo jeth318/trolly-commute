@@ -1,30 +1,26 @@
 let tokenRetryAttempt = 0;
 const retryLimit = 3;
-let timeoutActive = false;
-const authActions = { RETRY: 'retry', TERMINATE: 'terminate', TIMEOUT: 'timeout', PROCEED: 'proceed' };
-const { RETRY, TERMINATE, PROCEED, TIMEOUT } = authActions;
+const authActions = { RETRY: 'retry', TERMINATE: 'terminate', PROCEED: 'proceed' };
+const { RETRY, TERMINATE, PROCEED } = authActions;
 const { tokenConfig } = require('./rest.config');
 const axios = require('axios');
 
 const errorHandler = async ({ req, res, error, route }) => {
 	if (checkTokenStatus(error) === RETRY) {
-		console.error(`Could not get a valid access token. Trying again. (attempt ${tokenRetryAttempt})`);
 		tokenRetryAttempt += 1;
+		console.error(`Could not get a valid access token. Trying again. (attempt ${tokenRetryAttempt})`);
 		await fetchAccessToken();
 		// Retry
 		return route(req, res);
 	} else if (checkTokenStatus(error) === TERMINATE) {
+		tokenRetryAttempt = 0;
 		delete axios.defaults.headers.common['Authorization'];
 		const errorMessage = `Retry limit hit\nTerminated after ${retryLimit} attempts. Banning retries for 60 seconds.`;
 		console.error(errorMessage);
-		startTimeout();
 		return res.status(500).json({ error: errorMessage })
-	} else if (checkTokenStatus(error) === TIMEOUT) {
-		const errorMessage = 'Fetch requests is on timeout. Wait a minute and try again' 
-		console.error(errorMessage);
-		return res.status(500).json({ error: errorMessage })
-	}else {
+	} else {
 		console.log(error);
+		tokenRetryAttempt = 0;
 		return res.status(500).send(error);
 	}
 };
@@ -32,7 +28,7 @@ const errorHandler = async ({ req, res, error, route }) => {
 const fetchAccessToken = async () => {
 	try {
 		const response = await axios(tokenConfig);
-		const accessToken = response.data.access_token;
+		const accessToken = response.data.access_token+'23';
 		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 		tokenRetryAttempt = 0;
 		return console.log(`New token fetched: ${accessToken}`);
@@ -44,20 +40,10 @@ const fetchAccessToken = async () => {
 const checkTokenStatus = error => {
 	if (error.response && error.response.status === 401) {
 		return tokenRetryAttempt < retryLimit
-			? RETRY : timeoutActive
-				? TIMEOUT : TERMINATE;
+			? RETRY : TERMINATE
 	} else {
 		return PROCEED;
 	}
 };
-
-const startTimeout = () => {
-	timeoutActive = true;
-	setTimeout(() => {
-		timeoutActive = false;
-		tokenRetryAttempt = 0;
-		console.log('Timeout was reset.');
-	}, 60000);
-}
 
 module.exports = { errorHandler, fetchAccessToken, checkTokenStatus };
