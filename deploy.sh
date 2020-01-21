@@ -27,7 +27,7 @@ npm run build
 
 echo "Rebuild OK"
 echo "Rebooting server"
-pm2 restart trolly-commute
+pm2 restart TC-api
 echo "Server rebooted OK"
 echo "Deployment complete, and it was a success!"
 exit 0
