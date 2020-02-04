@@ -17,7 +17,9 @@ app.listen(app.get('port'), () => console.log('Running @ ' + app.get('port')));
 
 // Main route
 app.get('/', function (req, res) {
-	res.sendStatus(200);
+	console.log(req.headers);
+	console.log(req.path);	
+res.sendStatus(200);
 });
 
 const stopLocationsRoute = async (req, res) => {
@@ -57,5 +59,5 @@ const tripsRoute = async (req, res) => {
 	}
 };
 
-app.post('/api/trips', tripsRoute);
-app.post('/api/stop-locations', stopLocationsRoute);
+app.post('/trips', tripsRoute);
+app.post('/stop-locations', stopLocationsRoute);
