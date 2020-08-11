@@ -1,7 +1,4 @@
-const dotenv = require('dotenv');
 const qs = require('qs');
-dotenv.config();
-
 const tripBaseUrl = 'https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=';
 const tokenUrl = 'https://api.vasttrafik.se/token';
 const allStopsUrl = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.allstops?format=json';

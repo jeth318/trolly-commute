@@ -4,6 +4,8 @@ const port = 3001;
 const axios = require('axios');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+dotenv.config();
 const { getTripsConfig, getStoplocationConfig } = require('./resources/rest.config.js');
 const { errorHandler } = require('./resources/rest-util.js');
 

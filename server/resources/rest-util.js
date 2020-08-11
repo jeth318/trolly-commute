@@ -19,7 +19,6 @@ const errorHandler = async ({ req, res, error, route }) => {
 		console.error(errorMessage);
 		return res.status(500).json({ error: errorMessage })
 	} else {
-		console.log(error);
 		tokenRetryAttempt = 0;
 		return res.status(500).send(error);
 	}
