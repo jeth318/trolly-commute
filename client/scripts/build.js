@@ -12,14 +12,14 @@ process.on('unhandledRejection', err => {
 });
 
 // Ensure environment variables are read.
-require('../config/env');
+require('../src/env');
 
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
-const paths = require('../config/paths');
+const paths = require('../src/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
@@ -103,11 +103,12 @@ measureFileSizesBeforeBuild(paths.appBuild)
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
-
-  let compiler = webpack(config);
-  return new Promise((resolve, reject) => {
+  console.log('WEBPACK');
+  (config);
+  /* return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
+        console.log('ERRRRROR');
         return reject(err);
       }
       const messages = formatWebpackMessages(stats.toJson({}, true));
@@ -117,6 +118,7 @@ function build(previousFileSizes) {
         if (messages.errors.length > 1) {
           messages.errors.length = 1;
         }
+        console.log('RESD');
         return reject(new Error(messages.errors.join('\n\n')));
       }
       if (
@@ -133,13 +135,14 @@ function build(previousFileSizes) {
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }
+      console.log('lsdkgls');
       return resolve({
         stats,
         previousFileSizes,
         warnings: messages.warnings,
       });
     });
-  });
+  }); */
 }
 
 function copyPublicFolder() {

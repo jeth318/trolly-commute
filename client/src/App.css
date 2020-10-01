@@ -1,5 +1,5 @@
 body {
-  background-image: url("/images/wallpaper_rails_min.jpg");
+  background-image: url("./assets/wallpaper_rails_min.jpg");
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
   background-position: center;
@@ -209,7 +209,7 @@ th.arrival{
   padding: 20px;
   background-color: grey;
   color: white;
-  background-image: url("/images/stone.jpg")
+  background-image: url("./assets/stone.jpg")
 }
 
 .accordion-header{
@@ -548,7 +548,7 @@ table tbody {
 @media screen and (max-width: 470px) {
   body {
     height: 100%;
-    background-image: url("/images/trainrail-min.jpg");
+    background-image: url("./assets/trainrail-min.jpg");
   }
   .heading-title {
     display: 40px;
