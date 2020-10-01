@@ -9,7 +9,7 @@ import './App.css';
 import Error from './components/atoms/Error';
 import SearchButton from './components/search/SearchButton';
 import SwapCircle from './components/search/SwapCircle';
-const api = new API;
+const api = new API();
 
 interface State {
   inputFrom: string;

@@ -4,12 +4,6 @@ import { LegsRaw, StopLocation } from '../InterfaceCollection';
 import { getDistance } from 'geolib';
 import { stopLocationsUrl, tripsUrl } from './rest.config';
 
-const getPosition = (options?) => {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject, options);
-  });
-};
-
 let userPosition = {
   latitute: 0,
   longitude: 0
@@ -57,6 +51,8 @@ export default class API {
 
     try {
       const response = await axios(config);
+      console.log('RES', response.data);
+      
       const data: LegsRaw[] = await response.data;
       return data;
     } catch (error) { 
@@ -79,9 +75,9 @@ export default class API {
       );
 
       if (distance < 300) {
-        stopLocation.price = distance + ' m' + ' 📍';
+        stopLocation.price = distance + ' m 📍';
       } else {
-        stopLocation.price = Math.round(distance / 1000 * 10) / 10 + ' km' + ' 📍';
+        stopLocation.price = Math.round(distance / 1000 * 10) / 10 + ' km 📍';
       }
       return stopLocation;
     });

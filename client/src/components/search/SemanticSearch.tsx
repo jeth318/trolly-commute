@@ -3,8 +3,7 @@ import * as React from 'react';
 import { Search, Grid, SearchProps } from 'semantic-ui-react';
 import API from '../../api/APIService';
 import classNames from 'classnames';
-import { SemanticSearchProps as Props, StopLocation } from '../../InterfaceCollection';
-import { AxiosPromise } from 'axios';
+import { SemanticSearchProps as Props } from '../../InterfaceCollection';
 
 const api = new API();
 
@@ -35,7 +34,7 @@ class SemanticSearch extends React.Component<Props, any> {
   }
 
   render() {
-    const { isLoading, value, results } = this.state;
+    const { isLoading, results } = this.state;
 
     return (
       <div className={this.formGroupFromClasses()}>

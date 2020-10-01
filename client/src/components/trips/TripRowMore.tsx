@@ -38,7 +38,8 @@ class TripRowMore extends React.Component<Props, {}> {
     return (
     <div>
       <img 
-        src={__dirname + '../../../images/svg/walk.svg'} 
+        src={'/images/svg/walk.svg'} 
+        alt="walk"
         style={{ backgroundColor: 'white' }} 
         className="legLogo-special" 
       />
