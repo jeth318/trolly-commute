@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Clock from 'react-live-clock';
 
 class Header extends React.Component {
   render() {
@@ -8,11 +7,6 @@ class Header extends React.Component {
         <br />
         <h1 className="heading-title">När går vagnen?</h1>
         <div id="updatetime">
-          <Clock
-              format={'HH:mm:ss'}
-              ticking={true}
-              timezone={'Europe/Stockholm'}
-          />
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TripRowProps as Props, Leg } from '../../InterfaceCollection';
-import * as moment from 'moment';
+import moment from 'moment';
 
 class TripRow extends React.Component<Props, {}> {
   
