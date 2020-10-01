@@ -60,6 +60,8 @@ export default class API {
       const data: LegsRaw[] = await response.data;
       return data;
     } catch (error) { 
+      console.log('ERROR', error);
+      
       return console.error(error)
   }
 }

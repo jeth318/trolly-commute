@@ -1,6 +1,6 @@
 // import * as _ from 'lodash';
 import * as React from 'react';
-import { Search, Grid } from 'semantic-ui-react';
+import { Search, Grid, SearchProps } from 'semantic-ui-react';
 import API from '../../api/APIService';
 import classNames from 'classnames';
 import { SemanticSearchProps as Props, StopLocation } from '../../InterfaceCollection';
@@ -90,13 +90,13 @@ class SemanticSearch extends React.Component<Props, any> {
     }
   }
   
-  private handleSearchChange = (e, { value }) => {
+  private handleSearchChange = (e: React.MouseEvent<HTMLElement, MouseEvent>, data: SearchProps) => {
     const self = this;
-    this.props.onChange(value, this.props.identifier);
+    this.props.onChange(data.value, this.props.identifier);
     self.state.typeingTimeOut && clearTimeout(self.state.typeingTimeOut);
 
     self.setState({
-      value,
+      value: data.value,
       typeingTimeOut: setTimeout(() => {
         this.doSearch();
       },                         300)
