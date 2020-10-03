@@ -12,13 +12,11 @@ echo "Pulled successfully from master"
 
 echo "Installing server dependencies"
 cd server
-rm -rf node_modules
 npm install
 echo "Server dependencies installed"
 
 echo "Installing client dependencies..."
 cd ../client
-rm -rf node_modules
 npm install
 echo "Client dependencies was installed"
 

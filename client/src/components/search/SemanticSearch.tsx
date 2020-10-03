@@ -27,10 +27,10 @@ class SemanticSearch extends React.Component<Props, any> {
       },            this.doSearch);
     }
   }
-
-  componentWillReceiveProps() {
-    // If swap is true, set state with value from prop and trigger new search to update the results.
-    this.props.swap && this.setState({value: this.props.value}, this.doSearch);
+  static getDerivedStateFromProps(props, state) {
+    if(props.swap) {
+      return {valie: props.value } 
+    }
   }
 
   render() {

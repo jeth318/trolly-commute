@@ -48,6 +48,7 @@ const tripsRoute = async (req, res) => {
 	try {
 		const response = await axios(getTripsConfig(fromId, toId));
 		const data = await response.data;
+		console.log('DATA', data);
 		if (data.TripList && data.TripList.error) {
 			const { error } = data.TripList;
 			const args = { req, res, error, route: tripsRoute}
