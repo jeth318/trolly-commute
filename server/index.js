@@ -9,7 +9,7 @@ dotenv.config();
 const { getTripsConfig, getStoplocationConfig } = require('./resources/rest.config.js');
 const { errorHandler } = require('./resources/rest-util.js');
 
-// Middleware
+// Middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
