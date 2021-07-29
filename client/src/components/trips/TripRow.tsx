@@ -104,7 +104,7 @@ class TripRow extends React.Component<Props, {}> {
             <div
               key={index}
               className="legLogo"
-              style={{ backgroundColor: leg.fgColor, color: leg.bgColor }}
+              style={{ backgroundColor: leg.bgColor, color: leg.fgColor }}
             >
               {leg.sname}
             </div>

@@ -64,7 +64,7 @@ class TripRowMore extends React.Component<Props, {}> {
         <div
           id={leg.id}
           className="legLogo-sub"
-          style={{ backgroundColor: leg.fgColor, color: leg.bgColor }}
+          style={{ backgroundColor: leg.bgColor, color: leg.fgColor }}
         >
           {leg.name}
         </div>
