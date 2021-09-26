@@ -5,7 +5,8 @@ const axios = require('axios');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-dotenv.config();
+const path = require('path');
+dotenv.config({ path: path.join(__dirname, '.env') });
 const { getTripsConfig, getStoplocationConfig } = require('./resources/rest.config.js');
 const { errorHandler } = require('./resources/rest-util.js');
 
@@ -47,6 +48,7 @@ const tripsRoute = async (req, res) => {
 	try {
 		const response = await axios(getTripsConfig(fromId, toId));
 		const data = await response.data;
+		console.log('DATA', data);
 		if (data.TripList && data.TripList.error) {
 			const { error } = data.TripList;
 			const args = { req, res, error, route: tripsRoute}

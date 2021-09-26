@@ -5,5 +5,5 @@ const isLocalhost = hostname === 'localhost';
 console.log(isLocalhost);
 
 
-export const tripsUrl = isLocalhost ? '/api/trips' : `${protocol}//${hostname}/api/trips`;
-export const stopLocationsUrl = isLocalhost ? '/api/stop-locations' : `${protocol}//${hostname}/api/stop-locations`;
+export const tripsUrl = isLocalhost ? '/trips' : `${protocol}//${hostname}/api/trips`;
+export const stopLocationsUrl = isLocalhost ? '/stop-locations' : `${protocol}//${hostname}/api/stop-locations`;

@@ -22,6 +22,7 @@ class SwapCircle extends React.Component<Props, any> {
           onClick={this.handleSwap}
           className={this.state.spin ? 'swap-spin' : 'swap'}
           id="swapImg"
+          alt="swapcircle"
           src="images/swap.png"
         />
       </div>

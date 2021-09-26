@@ -8,7 +8,7 @@ class Header extends React.Component {
         <br />
         <h1 className="heading-title">När går vagnen?</h1>
         <div id="updatetime">
-          <Clock
+        <Clock
               format={'HH:mm:ss'}
               ticking={true}
               timezone={'Europe/Stockholm'}

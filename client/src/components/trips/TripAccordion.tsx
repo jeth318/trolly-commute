@@ -5,7 +5,7 @@ import { LegRow } from '../../InterfaceCollection';
 
 class TripAccordion extends React.Component<any, any> {
   constructor() {
-    super({});
+    super(null);
     this.state = {
       selectedRow: {}
     };

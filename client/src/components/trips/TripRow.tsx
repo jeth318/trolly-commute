@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TripRowProps as Props, Leg } from '../../InterfaceCollection';
-import * as moment from 'moment';
+import moment from 'moment';
 
 class TripRow extends React.Component<Props, {}> {
   
@@ -50,7 +50,7 @@ class TripRow extends React.Component<Props, {}> {
     for (let i = 0; i < legObj.length; i++) {
       if (legObj[i].name !== 'GÅ') {
         if (legObj[i].accessibility === 'wheelChair') {
-          return <div><img id="wheelchair" src="/images/svg/wheelchair.svg" className="accessibility" /></div>;
+          return <div><img id="wheelchair" src="/images/svg/wheelchair.svg" className="accessibility" alt="wheelchair"/></div>;
         } else {
           return null;
         }
@@ -97,7 +97,7 @@ class TripRow extends React.Component<Props, {}> {
               break;
           }
           return (
-            <img key={leg.id} src={source} className="legLogo-special" />
+            <img key={leg.id} src={source} className="legLogo-special" alt="leg" />
           );
         } else {
           return (
